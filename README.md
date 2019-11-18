@@ -76,7 +76,15 @@ When cross domain request is to be made, use jsonp (better alternative is CORS) 
 * Session manager
 The session manager creates HTTP sessions and manages the life cycles of HTTP sessions that are associated with the application.
 * Doctype
-In HTML, the doctype is the required "<!DOCTYPE html>" preamble found at the top of all documents. Its sole purpose is to prevent a browser from switching into so-called “quirks mode” when rendering a document; that is, the "<!DOCTYPE html>" doctype ensures that the browser makes a best-effort attempt at following the relevant specifications, rather than using a different rendering mode that is incompatible with some specifications.
+In HTML, the doctype is the required
+```html
+<!DOCTYPE html> 
+```
+preamble found at the top of all documents. Its sole purpose is to prevent a browser from switching into so-called “quirks mode” when rendering a document; that is, the 
+```html
+<!DOCTYPE html>
+```
+doctype ensures that the browser makes a best-effort attempt at following the relevant specifications, rather than using a different rendering mode that is incompatible with some specifications.
 * Semantic
 In programing, Semantics refers to the meaning of a piece of code — for example "what effect does running that line of JavaScript have?", or "what purpose or role does that HTML element have" (rather than "what does it look like?".)
 * Inline and block elements:
@@ -134,6 +142,47 @@ Immutable value, after it has been created, it can never change.
 An HTTP cookie (web cookie, browser cookie) is a small piece of data that a server sends to the user's web browser. The browser may store it and send it back with the next request to the same server. Typically, it's used to tell if two requests came from the same browser.
 * Js cookie access
 Document.cookie
+* Cookie, session storage, local storage difference: 
+    * LocalStorage: no expiration date, clears only with js or  clear browser cache
+    * SessionStorage: stores data only for one session. Data is never transfered to server
+    * Cookie: stores data that has to be sent to server. Only cookie is for server side reading as well as for client side. Size less then 4kb
+* script async and defer
+```html
+<script> // embed or reference executable code
+<script async> // default false, the executable code will be executed synchronously
+<script defer> // code will be executed after the document is parsed
+```
+* html properties vs attributes
+```html
+<input type="checkbox" checked=true/>
+
+$('input').prop('checked'); // returns true
+$('input').attr('checked'); // returns "checked"
+
+```
+* html data- attributes: store additional data on certain html elements
+```html
+<article
+  id="electric-cars"
+  data-columns="3"
+  data-index-number="12314"
+  data-parent="cars">
+...
+</article>
+```
+```js
+const article = document.querySelector('#electric-cars');
+ 
+article.dataset.columns // "3"
+article.dataset.indexNumber // "12314"
+article.dataset.parent // "cars"
+```
+* Scalable Vector Graphics (SVG) is an XML-based vector image format for two-dimensional graphics with support for interactivity and animation
+* html head is not rendered in page
+* The CSS Reset stylesheet is a basic template to wipe out all built-in styling for HTML elements.
+* The Normalize.css stylesheet also removes browser inconsistencies for HTML elements, but instead of removing everything like CSS Reset, normalize.css will preserve some useful defaults
+* Native objects are those objects supplied by JavaScript. Examples of these are String, Number, Array, Image, Date, Math, etc.
+* Host objects are objects that are supplied to JavaScript by the browser environment. Examples of these are window, document, forms, etc.
 * Js var starts with
 $, _, and letters.
 * Js modules
@@ -188,6 +237,11 @@ function toggleDone (event) {
   //We now have the correct input - we can manipulate the node here
 }
 ```
+* event delegation: adding event listener to parrent will propagate 
+* adding event listener to element will add event listener to all the children (event delagation) 
+* process of delegation execution is event bubbling
+* difference between target and currentTarget, target is the thing that is clicked, and currentTarget is where you attached eventListener (these two can be different because delegation for example)
+* 
 * ES6 modules: Named exports, Default exports, Imports are hoisted
 * ES6 new functionalities: constants, arrow functions, parameter default values, string interpolation, property shorthand ({x, y} instead of {x:x, y:y}), destructuring (var { op, lhs, rhs } = getASTNode()), class
 * DRY – Don’t Repeat Yourself
@@ -278,6 +332,28 @@ keypresses = trackEvent( newEvent2, keypresses );
     * It sets this
     * It executes constructor
     * It returns newly created object, or reference to object
+* process from when user enters url until page loads
+    * extract ip adress from ulr (browser cache, os cache, dns cache, dns data)
+    * browser opens tcp connection sends http(s) request
+    * server handles request and sends the response
+    * browser parse response and render html
+* getting data from server
+    * Client pull — client asking server for updates at certain regular intervals
+    * Server push — server is proactively pushing updates to the client (reverse of client pull)
+    * Short polling is an AJAX-based timer that calls at fixed delays whereas Long polling is based on Comet (i.e server will send data to the client when the server event happens with no delay).
+    * web sockets is persistent connection between client and server
+    * server send event - is mechanism that allows the server to asynchrounously push the data to the client once the client-server connection is esablished. Server decides to send data when new data is available.
+* headers (req, resp)
+    * expires - date/time after response is condsidered stale
+    * date - when message originated
+    * age - time in seconds object has been in proxy cache
+    * if-modified-since - server will return response only if requested data has been modified after given date
+    * DNT - Do Not Track - does user prefer privacy
+    * cache-control - speficy caching mechanisms in req and resp
+    * transfer-encoding - form of encoding for payload body
+    * e-tag - identifier for specific version of resource
+    * x-frame-options -  should browser be allowed to render page
+* Prefetching allows a browser to silently fetch the necessary resources needed to display content that a user might access in the near future.
 * Rxjs pipeable operator (function) takes observables as an input and returns another observable (a pure operation) (subscribing to output observable will also subscribe to input observable
 * How to check if object contain property: hasOwnProperty (will return true only if property exist in object itself, not the chain)
 * Difference between argument and a parameter (argument is a value passed to a function, parameter is a value that function expects upon execution)
@@ -293,13 +369,19 @@ keypresses = trackEvent( newEvent2, keypresses );
 * Minification, is the process of removing all unnecessary characters from the source codes that are there for readability reasons. This process is used to optimize builds and code size. Uglify js ass a part of node (npm)
 * Priority of css selectors is done by specificity. The more specific the selector is it is ‘stronger’.
 * Strict mode makes several changes to semantics:
-* Silent errors throw errors (changing object after freeze, this in function is undefined instead of window)
-* Some optimizations so could run faster
-* Prohibits syntax for next releases
+    *   Silent errors throw errors (changing object after freeze, this in function is undefined instead of window)
+    * Some optimizations so could run faster
+    *   Prohibits syntax for next releases
 * Object.freeze(obj). Obj cannot be changed.
 * Self invoking function (function() {}())
 * Promise.any method is similar to Promise.race but the promise returned by this method does not execute the catch block as soon as any of the promises gets rejected. Instead, it waits until any of the promises resolves. If none of the promises is resolved, catch block will get executed. If any of the promises have resolved first, then block will be executed.
-
+* xpath is query language for xml
+* meta tag robot: "noindex", don't index page while web site is in development
+* in the html form, every control should have 'name' attribute which is serve the purpose to map params for submit.
+* content tag is used for displaying on google search
+* image tag in html5 doesn't need to close
+* mailto:[mail.com]
+* a with name attribute but without href attribute is and anchor
 
 
 REACT, REDUX:
@@ -343,6 +425,30 @@ shouldComponentUpdate(), render(),componentDidUpdate()
 * Each "data table" should store the individual items in an object, with the IDs of the items as keys and the items themselves as the values.
 * Any references to individual items should be done by storing the item's ID.
 * Arrays of IDs should be used to indicate ordering.
+* js is single threaded
+* event loop
+    * setTimeout is provided by the browser, js is calling the function which invokes js function after given time (it pushes callback on taks queue, event loop puts first thing on the stack from task queue if stack is empty)
+    * setTimeout with zero time is used to delay callback until stack is cleared
+    * ajax request lives in a browser as web api. When it completes, callback is pushed in to the queue, it is picked up by the event loop and when stack is empty callback will execute
+    * to define async forEach (which is synchrounous) use setTimeout with delay time 0 each time callback is called
+    * Microtasks and Macrotasks: setTimeout, onClick are Macrotasks and all tasks are executed sequentally. Microtask queue is processed after Marcotasks (Promise)
+    * event loop (microtasks and macrotasks)
+        * Check if there is any task available in the macrotasks queue.
+        * If so and this task is running, wait until it is completed before going to the next step. If not, go directly to step 3.
+        * Then run all the microtasks that are in the microtask queue.
+        * If we add new microtasks during the execution of the microtasks, they are also executed.
+    
+* IIFE imediatelly invoked function expression
+```js
+function a() {}(); // not good
+const foo = function(){}(); // good
+(function () {})(); // good
+```
+* undeclared variable is different from undefined (browser gives an error)
+* when use const, varible has to be initialized
+* type of undeclared and undefined will return 'undefined'
+* type of null is an object - bug in js
+
 
 JS FUNCTIONAL PATTERNS
 ```js
