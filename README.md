@@ -448,7 +448,8 @@ const foo = function(){}(); // good
 * when use const, varible has to be initialized
 * type of undeclared and undefined will return 'undefined'
 * type of null is an object - bug in js
-
+* async functions return AsyncFunction object. These functions operate in a separate order then the rest of the code via the event loop, returning implicit Promise as its result. An async function can contain await expression that pauses the execution to wait for the passed promise resolution, then resumes execution.
+* use strict is mandatory when using es6
 
 JS FUNCTIONAL PATTERNS
 ```js
