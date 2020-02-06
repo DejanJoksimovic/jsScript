@@ -96,6 +96,12 @@ The HTML <form> element represents a document section that contains interactive 
 Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML.
 * CSS Selectors
 In CSS, selectors are used to target the HTML elements on our web pages that we want to style.
+```css
+.a.b selects with both a and b
+.a .b selects b where it is decendent of a
+.a > .b selects b where it is direct decendent of a
+.a, .b selects a or b
+```
 * CSS Selectors types:
 Simple selectors: type, class, id
 Attribute selectors: based on attribute values
