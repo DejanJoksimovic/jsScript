@@ -221,13 +221,17 @@ Is a web-based hosting service for version control using git
 * Difference between y.x and y[x]. Second expression is evaluating x before accessing the property
 * Elements in array are stored as array properties, using numbers as property names, since .Number cannot be used, we use [number]. Array.length is the same as array[“length”]
 * Properties that contain functions are called methods
-* Object.keys property lists all properties of an object
+* Object.keys property lists all properties of an object (if the properties (keys) are strings)
+* if the properties are symbols, use Reflect.onwKeys
+* Reflect is similiar object as it is Math object that contains built in methods, similar to Object but with some specific differences (like ownKeys..)
 * Object.assign copies all properties from one object to another
 * Arrays are just a kind of objects specialized for storing sequences of things
 * Difference between fun(a) and a.fun(). Second call has this keyword default and it uses this parameters
 * Generally speaking, a function is a "subprogram" that can be called by code external (or internal in the case of recursion) to the function. Like the program itself, a function is composed of a sequence of statements called the function body. Values can be passed to a function, and the function will return a value. In JavaScript, functions are first-class objects, because they can have properties and methods just like any other object. What distinguishes them from other objects is that functions can be called. In brief, they are Function objects.
 * Functions that operate on other functions, either by taking them as arguments or by returning them, are called higher-order functions.
 * Apply, call , bind: Use .bind() when you want that function to later be called with a certain context, useful in events. Use .call() or .apply() when you want to invoke the function immediately, and modify the context.
+* Apply, call and bind are not working with arrow function
+* Call and Apply cannot override bind
 * When it comes to inheritance, JavaScript only has one construct: objects. Each object has a private property which holds a link to another object called its prototype. That prototype object has a prototype of its own, and so on until an object is reached with null as its prototype. By definition, null has no prototype, and acts as the final link in this prototype chain.
 * We can now use the new operator to create an instance of doSomething() based on this prototype.
 * When a function is created in JavaScript, JavaScript engine adds a prototype property to the function. This prototype property is an object (called as prototype object) which has a constructor property by default. Constructor property points back to the function on which prototype object is a property. We can access the function’s prototype property using the syntax functionName.prototype.
