@@ -392,7 +392,19 @@ keypresses = trackEvent( newEvent2, keypresses );
 * image tag in html5 doesn't need to close
 * mailto:[mail.com]
 * a with name attribute but without href attribute is and anchor
-
+* Build process is an automated sequence of tasks that runs on each push/release.
+* build process includes:
+    * clean install
+    * linter
+    * test
+    * build
+        * transpile (babel, typescript, flow)
+        * preprocess (sass, less)
+        * uglify (minify)
+        * bundle (webpack)
+        * push (git)
+        * deployment (optional)
+* the build tasks execution can be done with CLI (npm)
 
 REACT, REDUX:
 * React components and props
