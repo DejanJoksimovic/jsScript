@@ -287,8 +287,8 @@ function toggleDone (event) {
 * Object.freeze() can be used to turn mutable object/array/function to immutable(top level only). 
 * Web services exchange data from a server to a client, using an XML format to send requests
 * The basic web services platform is XML + HTTP. All the standard web services work using the following components −
-a.	SOAP (Simple Object Access Protocol) (to transfer a message)
-b.	UDDI (Universal Description, Discovery and Integration) 
+a.	SOAP (Simple Object Access Protocol)(to transfer a message)
+b.	UDDI (Universal Description, Discovery and Integration)
 c.	WSDL (Web Services Description Language) (to describe the availability of device)
 d.	XML (to tag the data)
 * To achieve immutability we don’t need to copy the entire structure every time, just the previous version.
@@ -472,6 +472,12 @@ const foo = function(){}(); // good
 * type of null is an object - bug in js
 * async functions return AsyncFunction object. These functions operate in a separate order then the rest of the code via the event loop, returning implicit Promise as its result. An async function can contain await expression that pauses the execution to wait for the passed promise resolution, then resumes execution.
 * use strict is mandatory when using es6
+* use const in regex
+```js
+const regex = 'test';
+var re = new RegExp(regex,"g");
+someStr.match(re);
+```
 
 JS FUNCTIONAL PATTERNS
 ```js
