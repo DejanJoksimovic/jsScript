@@ -478,6 +478,17 @@ const regex = 'test';
 var re = new RegExp(regex,"g");
 someStr.match(re);
 ```
+* You can use store inside a function like this:
+```js
+import store from 'blaBla/store';
+// store is just a:
+// return createStore(blaBla...
+// ...
+  const {
+    something,
+  } = store.getState();
+```
+
 
 JS FUNCTIONAL PATTERNS
 ```js
