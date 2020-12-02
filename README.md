@@ -45,6 +45,26 @@ http_request.onreadystatechange = () => (http_request.readyState === 4) && conso
 http_request.open("GET", "http://www.tutorialspoint.com/json/data.json", true);
 http_request.send();
 ```
+* example of downloading within browser:
+```js
+const xhr = new XMLHttpRequest(); // (A)
+xhr.open('GET', 'http://example.com/textfile.txt'); // (B)
+xhr.onload = () => { // (C)
+  if (xhr.status == 200) {
+    processData(xhr.responseText);
+  } else {
+    assert.fail(new Error(xhr.statusText));
+  }
+};
+xhr.onerror = () => { // (D)
+  assert.fail(new Error('Network error'));
+};
+xhr.send(); // (E)
+
+function processData(str) {
+  assert.equal(str, 'Content of textfile.txt\n');
+}
+```
 * On open status set to 1, on send status 2, after receiving response status changed to 4.
 * XMLHttpRequest object is a browser level api. It is used to update part of the page without reloading. It handles CORS policy. 
 * hoisting
@@ -53,7 +73,11 @@ The JavaScript engine treats all variable declarations using “var” as if the
 The binding which defines the scope of execution. Function declared in a function is a Closure. Inner function can access the parent function variables.
 * var and let diff:
 The scope of a variable defined with var is function scope or declared outside any function, global. The scope of a variable defined with let is block scope. For example: var declared in a function is available outside of a function. Let declared in a function is not available outside the function. Const also has a block scope.
-* Js advantages: client side execution, testing js in console of browser, support major browsers, easy syntax
+* Js advantages: client side execution, testing js in console of browser, support major browsers, easy syntax. If we want to limit scope of var, we can use IIFE:
+```js
+(function() {var a})();
+```
+Since var is function scope, it will be available only within the function itself.
 * Js page redirection 
 ```js
 window.location(url)
@@ -138,6 +162,23 @@ Is an basic element in js. Is an object.
 inheritance, polymorphism, encapsulation
 * js is not an object oriented language
 Only inheritance that js supports is Prototypal inheritance. Js is interpreted language. Interpreted languages are not compiled and interpreter (browser) executes them directly.
+* reserved words cannot be used to declare a variable, but they can be used as a property of an object
+* function or { are always interpreted as statements, only if they are wrapped with (), they are interpreted as an expression statement (expression as a statement)
+* after return statement, new line is forbiden in order to prevent accidentally return undesired value
+* shadow: inner block x shadow outer x
+```js
+const x = 1;
+assert.equal(x, 1);
+{
+  const x = 2;
+  assert.equal(x, 2);
+}
+assert.equal(x, 1);
+```
+* global object can be accessed:
+```js
+globalObject
+```
 * scope
 The current context of execution.
 * Difference between == and ===
@@ -405,7 +446,22 @@ keypresses = trackEvent( newEvent2, keypresses );
         * push (git)
         * deployment (optional)
 * the build tasks execution can be done with CLI (npm)
-
+* (+) operator - converts both values to primitive values (string or number, and does addition)
+* Object.is(a, b), is even more strict then ===
+* >= and <= are strict
+* ?? operator is used when only null or undefined needs to be checked: a ?? b (if a i null or undefined)
+* The comma operator (,) evaluates each of its operands (from left to right) and returns the value of the last operand. 
+```js
+x = (x++, x);
+console.log(x);
+// expected output: 2
+x = (2, 3);
+console.log(x);
+// expected output: 3
+```
+It is commonly used in for loop
+* JSON doesn't support undefined, only null
+* a in b, check if b.a
 REACT, REDUX:
 * React components and props
 Components let you split the UI into independent, reusable pieces, and think about each piece in isolation. They accept arbitrary inputs (called “props”) and return React elements describing what should appear on the screen.
@@ -459,6 +515,9 @@ shouldComponentUpdate(), render(),componentDidUpdate()
         * If so and this task is running, wait until it is completed before going to the next step. If not, go directly to step 3.
         * Then run all the microtasks that are in the microtask queue.
         * If we add new microtasks during the execution of the microtasks, they are also executed.
+    * event loop executions tasks
+    * task sources add tasks
+    * a task is finished when it reaches return keyword
     
 * IIFE imediatelly invoked function expression
 ```js
@@ -488,6 +547,237 @@ import store from 'blaBla/store';
     something,
   } = store.getState();
 ```
+* All primitive values are immutable!
+* you cannot change the chars in an array like this:
+```js
+str[1] = 'a';
+```
+because strings are primitive values
+Also we cannot set property to a number for example
+Also we cannot change:
+```js
+let a = 'test';
+a.b = 3;
+```
+This is a bug in js:
+```js
+console.log(typeof(null));
+```
+famous number problem
+```js
+console.log(0.1 + 0.2 === 0.3); // false
+console.log(0.1 + 0.2 === 0.30000000000000004); // true
+```
+As we move from 0 in either direction, we start losing precision for numbers.
+* Infinity and Nan are also numbers
+* two different codes:
+```js
+let banana = function() {}
+let result = banana
+// will point to the same function in memory
+```
+```js
+let banana = 1
+let result = banana
+banana = 2;
+// will point to 2 different values
+// banana is 2
+// result is 1
+```
+* equality in js
+```js
+typeof NaN // 'number'
+NaN === NaN // false - special case
+0 === -0 // true - special case
+-0 === 0 // true - special case
+{} === {} // false
+2 === 2 // true
+```
+* Further calculations with NaN will give you NaN again
+* to check if it is NaN
+```js
+Number.isNaN(val)
+Object.is(val, NaN)
+val !== val // since the only value for which this is applicable is NaN
+```
+* if divided with zero
+```js
+5 / 0
+// Infinitity
+```
+* number is Infinity
+```js
+Number.isFinite(x) === false;
+```
+* ceil, floor and round
+```js
+// ceil smallest
+Math.floor(2.9); // 2
+// floor largest
+Math.ceil(2.9) // 3
+// .5 rounded up
+Math.round(2.5) // 3
+```
+* converting to string
+```js
+String(x); // recomended
+'' + x;
+x.toString(); // does not work for undefined and null
+String(['a', ['b']]); // 'a,b' it will hide some details
+```
+* Stringifying functions, returns their source code
+```js
+const a = () => {};
+String(a); // "() => {}"
+```
+* Symbols
+```js
+// each value of symbol is unique
+const mySymbol = Symbol('test');
+// can be used when unique prop keys are needed (even if some of them are the same)
+const obj = {
+    [Symbol('test')]: 'test',
+    [Symbol('test')]: 'test1',
+};
+// if we want to differentiate two similar constants:
+const xStatus = Symbol('red');
+const yStatus = Symbol('red');
+// xStatus !== yStatus
+```
+* Symbols work with explicit conversion mostly
+```js
+Boolean(sym) // ok
+!sym // ok
+Number(sym) // ok
+sym * 2 // Type error, similar is for String and toString
+```
+* throw exception
+```js
+// one by one throw exits the nested constructs until it encounters a try statement. Execution continues in the coresponding catch statement
+```
+* finally block executes before try statement ends
+```js
+() => {
+    try {
+      throw new Error();
+    } finally {
+      finallyWasExecuted = true;
+    }
+    // finally will be executed
+```
+* import * - import all
+* default export cannot export const since it can define multiple values:
+```js
+const a = 1, b = 2;
+```
+* 'default' cannot be a variable name, but it can be a export or a property name
+* reserved names are allowed to use as property names
+* when we use imports, we cannot change the variable exported, but connection is live, meaning that if there is a function that will change exported variable and is exported also, variable can be changed using mentioned function.
+* import(x) returns a promise
+* undefined and null can be spread inside an object
+```js
+{...undefined, ...null} // {}
+// and also numbers
+{...123} // also {}
+```
+* spread can be used for shallow copying object. If any of the properties values is object, the value will not be shallow copied.
+* spread can be used for default data:
+```js
+const providedData = { data1: 'c', data3: 'd' };
+const allData = {data1: 'a', data2: 'b', ...providedData};
+```
+* we can use '?' to check if we can safely execution part of the code on the right side
+```js
+const a = { b: 1 };
+a?.c?.d // no error, undefined
+a?.b // 1
+```
+* '?' checks for null or undefined
+* in operator to check if there is a prop inside an object
+```js
+const obj = { test: 1 };
+'test' in obj // true
+```
+* delete obj.a will delete a property of object obj
+* Object.fromEntries() is doing reverse Object.entries()
+* toString function is used to determine how to convert to string, for numbers, valueOf function is used
+* Object.freeze makes object immutable (not object in properties of an object)
+* non inhereted properties are called own properties
+* iterable has next, value and done attr. When iteration is finished, done is true, add
+* if you set element length to smaller number then current, you are removing elements
+* string is itarable
+```js
+[...'abc'] === [ 'a', 'b', 'c' ] // numbers are not
+```
+* you can spread iterable to get an array
+```js
+const arr = [1,2,3];
+// arr.keys() returns iterable
+[...arr.keys()]; // [0,1,2]
+```
+* you can add additional member of an array like this:
+```js
+const a = [1,2];
+a.test = 1;
+// result
+// [1, 2, test: 1]
+// equals:
+// 0: 1
+// 1: 2
+// test: 1
+// length: 2
+// __proto__ ...
+```
+* a way to check if something is an array:
+```js
+Array.isArray(something);
+```
+* array like objects
+```js
+{length: 2, 0: 'a', 1: 'b'};
+```
+* remove first elem of an array:
+```js
+const arr1 = ['a', 'b', 'c'];
+const [, ...arr2] = arr1;
+```
+* flatMap can be used for filtering and map at the same time
+* js Maps allow use of functions, objects and other types as object keys. Object only allow strings and Symbols. Also Maps are iterable, objects are not
+* structures that has limited number of memebers use length, others use size
+* swap values:
+```js
+let x = 'a';
+let y = 'b';
+[x,y] = [y,x]; // swap
+```
+* generator function example:
+```js
+function* genFunc1() {
+  yield 'a';
+  yield 'b';
+}
+const iterable = genFunc1();
+[...iterable] === ['a', 'b'];
+```
+* the way of using generator functions:
+```js
+let location = 0;
+function* genFunc2() {
+  location = 1; yield 'a';
+  location = 2; yield 'b';
+  location = 3;
+}
+const iter = genFunc2();
+location === 0;
+iter.next() === {value: 'a', done: false};
+location === 1;
+iter.next() === {value: 'b', done: false};
+location === 2;
+iter.next() === {value: undefined, done: true};
+```
+* await pauses the current async function and returns from it. Once the awaited result is ready, the execution of the function continues where it left off.
+* Many of the user interface mechanisms of browsers also run in the JavaScript process (as tasks). Therefore, long-running JavaScript code can block the user interface.
+
 
 
 JS FUNCTIONAL PATTERNS
@@ -676,6 +966,223 @@ var p3 = () => new Promise(
 ]
 ```
 
+# JS Chanlenges:
+```js
+const twoSum = function(nums, target) {
+    return nums.reduce((acc, curr, index) => {
+        const candidate = nums.slice(index + 1).findIndex(elem => elem + curr === target);
+        if (candidate !== -1) {
+            acc.push(index, candidate + index + 1);
+        }
+        return acc;
+    }, []);
+};
+/*
+twoSum([2,0,7,11,15], 9)
+result: [0,2]
+*/
 
+
+const reverse = function(x) {
+ const value = parseInt(x.toString().split('').reverse().join(''));
+ switch(true) {
+  case value > 2**31 - 1:
+    return 0;           
+  case x < 0:
+    return -1 * value;
+  default:
+    return value
+  }
+};
+/*
+reverse(321)
+result: 123
+note: if reversed overflows [−2**32,  2**31 − 1], should return 0
+this can be used for isPalindrome (x === reverse(x))
+*/
+
+const romanToInt = function(s) {
+  return s.split('').reduce((acc, curr, index, arr) => {
+    switch(true) {
+      case curr === 'I' && ['V', 'X'].includes(arr[index + 1]):
+      case curr === 'X' && ['L', 'C'].includes(arr[index + 1]):
+      case curr === 'C' && ['D', 'M'].includes(arr[index + 1]):
+          return { ...acc, previous: curr };
+          default:
+            return { num: getNum(acc, curr), previous: null };
+    }
+  }, { num: 0, previous: null }).num;
+};
+
+const getNum = (acc, curr) => {
+  const { num, previous } = acc;
+  const sum = num + romanNumerals[curr];
+  return previous ? sum - romanNumerals[previous] : sum;
+}
+  
+const romanNumerals = {
+  I: 1,
+  V: 5,
+  X: 10,
+  L: 50,
+  C: 100,
+  D: 500,
+  M: 1000,
+};
+/*
+romanToInt('IX')
+result: 9
+*/
+
+const longestCommonPrefix = function(strs) {
+    if (!strs.length) {
+        return '';
+    }
+    const [first, ...rest] = strs;
+    const shortestLength = rest.reduce((acc, curr) => {
+        return curr.length < acc.length ? curr : acc;
+    }, first);
+    return shortestLength.split('').reduce((acc, curr, index) => {
+        if (!acc.contains) {
+            return acc;
+        }
+        const contains = strs.every(str => str[index] === curr);
+        return contains ? { prefix: acc.prefix + curr, contains: true } : { ...acc, contains: false };
+    }, { prefix: '', contains: true }).prefix;
+};
+/*
+longestCommonPrefix(["aca","cba"]);
+result ''
+longestCommonPrefix(["flower","flow","flight"]);
+result 'fl'
+longestCommonPrefix([]);
+result ''
+*/
+
+const isValidParentheses = function(s) {
+    if (!s) return true;
+    const res = s.split('').reduce((acc, curr) => {
+        switch(true) {
+            case ['(', '{', '['].includes(curr):
+                return { ...acc, soFar:  [ ...acc.soFar, curr ] }
+            case [')', '}', ']'].includes(curr):
+                const oldSoFar = acc.soFar;
+                const appropriate = oldSoFar[oldSoFar.length - 1] === closedOposite[curr];
+                const newAcc = appropriate ? { ...acc, soFar: oldSoFar.slice(0, oldSoFar.length - 1) }  :  { ...acc, eliminator: true };
+                return newAcc;
+        default:
+            return true;
+        }
+    }, { soFar: [], eliminator: false });
+    return !res.eliminator && !res.soFar.length;
+}
+
+const closedOposite = {
+  '}': '{',
+  ')': '(',
+  ']': '[',
+};
+/*
+isValidParentheses('()'); // true
+isValidParentheses('({})'); // true
+isValidParentheses('([)]'); // false
+*/
+
+const strStr = function(haystack, needle) {
+    if (needle === '') return 0;
+    return haystack.split('').findIndex((char, indexF, array) => {
+        return needle.split('').reduce((acc, curr, indexR) => {
+            return acc && array[indexF + indexR] === curr;
+        }, true);
+    });
+};
+
+/*
+// finds first index
+strStr('hello', 'll'); // 2
+strStr('aaa', 'bb'); // 0
+*/
+
+const searchInsert = function(nums, target) {
+    const index = nums.findIndex(num => {
+        const equal = num === target;
+        const larger = num > target;
+        return equal || larger;
+    });
+    return index === -1 ? nums.length : index;
+};
+
+/*
+searchInsert([1,3,5,6], 5) // 2
+searchInsert([1,3,5,6], 2) // 1
+search([1,3,5,6], 7) // 4
+*/
+
+// with looking into solutions
+const maxSubArraySum = nums => {
+   return nums.reduce((acc, curr) => {
+       const prev = Math.max(acc.prev + curr, curr);
+        return {
+            prev,
+            max: Math.max(acc.max, prev),
+        };
+    }, { prev: -Number.MAX_VALUE, max: -Number.MAX_VALUE }).max;
+  }
+
+/*
+maxSubArray([-2,1,-3,4,-1,2,1,-5,4]) // 6
+*/
+
+const lengthOfLastWord = function(s) {
+    if (!s) {
+        return 0;
+    }
+    const arr = s.split(' ').reverse();
+    const candidate = arr.find(elem => elem.length);
+    return candidate ? candidate.length : 0;
+};
+/*
+lengthOfLastWord("Hello World") // 5
+*/
+
+const plusOne = function(digits) {
+    const digitsReversed = digits.reverse();
+    return digitsReversed.reduce((acc, curr, index, arr) => {
+        const newDigit = curr + acc.add;
+        if (newDigit !== 10) {
+            return { digits: [...acc.digits, newDigit], add: 0 };
+        }
+        if (arr.length === index + 1) {
+            return { digits: [...acc.digits, 0, 1] };
+        }
+        return { digits: [...acc.digits, 0], add: 1 };
+    }, { digits: [], add: 1}).digits.reverse();
+};
+/*
+    plusOne([1,2,3]) // [1,2,4]
+    plusOne([9,9]) // [1,0,0]
+*/
+
+const mySqrt = function(x, sqrt = 1) {
+    const candidate = sqrt * sqrt;
+    if (candidate > x) return sqrt - 1;
+    return mySqrt(x, sqrt + 1);
+};
+
+/*
+    mySqrt(8) // 2
+    mySqrt(9) // 3
+*/
+
+const isSameTree = (p, q) => {
+    if (!p && !q) return true;
+    if (!p || !q || p.val !== q.val) return false;
+    return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+};
+/*
+    isSameTree([1,2,3], [1,2,3]) // true
+    isSameTree([1,2,null], [1,2,3]) // false
+*/
+```
 
 
