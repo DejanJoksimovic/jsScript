@@ -777,7 +777,79 @@ iter.next() === {value: undefined, done: true};
 ```
 * await pauses the current async function and returns from it. Once the awaited result is ready, the execution of the function continues where it left off.
 * Many of the user interface mechanisms of browsers also run in the JavaScript process (as tasks). Therefore, long-running JavaScript code can block the user interface.
+* Promise can be in 3 states: pending, and one of two settled states: fulfilled and rejected.
+* Promise resolve returns fullfilled or rejected status
+* Promise reject, rejects it with given error
+* then receives return value from promise on which mentioned then is called
+* .catch .then can be chained in the order, once catch is executed, then will continue since catch returns a promise
+* if promise returns a promise in return, next chained promise will receive .then result of that promise as input
+* .then executes async calls sequentially
+* Promises handle both asynchronous errors (via rejections) and synchronous errors
+* util.promisify() is a utility function that converts a callback-based function f into a Promise-based one
+```js
+import * as fs from 'fs';
+import {promisify} from 'util';
 
+const readFileAsync = promisify(fs.readFile); // (A)
+
+readFileAsync('some-file.txt', {encoding: 'utf8'})
+  .then(text => {
+    assert.equal(text, 'The content of some-file.txt\n');
+  })
+  .catch(err => {
+    assert.fail(err);
+  });
+```
+* fetch:
+```js
+// fetch can be alternative for axios, but axios has some features implemented very simply
+fetch('http://example.com/textfile.txt')
+  .then(response => response.text())
+  .then(text => {
+    assert.equal(text, 'Content of textfile.txt\n');
+  });
+```
+* promise combinators:
+    * race
+    * all
+    * allSettled
+    * ...
+* promise primitive:
+    * resolve
+    * reject
+* promise.race can be used to set a timeout for your promise. For example: the 'second' promise can be resolved after some period of time (timeout) using the setTimeout function. There for in promise.race, if the promise with timeout finish first, second one will not finish.
+* good promise practise:
+```js
+// bad practise: this will return promise that is not yet finished
+promise.then(r => r);
+return promise;
+// good practise:
+return promise.then(r => r);
+
+//bad practise:
+.then(r => {
+    return someFun()
+    .then(r1 => r1);
+});
+.then(r => someFun())
+.then(r1 => r1);
+```
+* async functions
+```js
+async function someFun() => {
+try {
+    const resp1 = await someReq(); // async
+    const resp2 = await resp1.someReq1(); // async
+    return resp2; // sync
+  }
+  catch(e) {
+    return e;
+  }
+};
+```
+* JSON.parse(text, reviver?) does not parse regex values. For this reviver param must be used
+* Date js does not support time zones.
+* 
 
 
 JS FUNCTIONAL PATTERNS
