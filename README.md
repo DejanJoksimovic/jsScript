@@ -1,4 +1,4 @@
-# Web, js, basics:
+# Web:
 ## http:
 Hypertext Transfer Protocol (HTTP) is an application-layer protocol for transmitting hypermedia documents, such as HTML. It was designed for communication between web browsers and web servers, but it can also be used for other purposes. HTTP follows a classical client-server model, with a client opening a connection to make a request, then waiting until it receives a response. HTTP is a stateless protocol, meaning that the server does not keep any data (state) between two requests. Though often based on a TCP/IP layer, it can be used on any reliable transport layer; that is, a protocol that doesn't lose messages silently, such as UDP.
 ## https:
@@ -101,6 +101,7 @@ The session manager creates HTTP sessions and manages the life cycles of HTTP se
 In programing, Semantics refers to the meaning of a piece of code — for example "what effect does running that line of JavaScript have?", or "what purpose or role does that HTML element have" (rather than "what does it look like?".)
 ## Html form:
 The HTML <form> element represents a document section that contains interactive controls for submitting information to a web server.
+Form can be submitted with submit() using js
 ## Cookie, session storage, local storage difference: 
 ### LocalStorage:
 no expiration date, clears only with js or  clear browser cache
@@ -147,7 +148,7 @@ is not rendered in page
 ## Hashtag
 is used as an Anchor in url
 ## The ready event occurs
-after the HTML document has been loaded, while the onload event occurs later, when all content (e.g. images) also has been loaded. The onload event is a standard event in the DOM, while the ready event is specific to jQuery. The purpose of the ready event is that it should occur as early as possible after the document has loaded, so that code that adds functionality to the elements in the page doesn't have to wait for all content to load.
+after the HTML document has been loaded, while the onload event occurs later, when all content (e.g. images) also has been loaded. The onload event is a standard event in the DOM, while the ready event is specific to jQuery. The purpose of the ready event is that it should occur as early as possible after the document has loaded, so that code that adds functionality to the elements in the page doesn't have to wait for all content to load. ready is similar to onDocumentReady
 ## Web services exchange data from a server to a client, using an XML format to send requests
 ## The basic web services
 platform is XML + HTTP. All the standard web services work using the following components −
@@ -187,7 +188,9 @@ is query language for xml
 ## image tag in html5 doesn't need to close
 ## mailto:[mail.com]
 ## a with name attribute but without href attribute is and anchor
-
+## viewState vs sessionState
+* 'ViewState' is specific to a page in a session.
+* 'SessionState' is specific to user specific data that can be accessed across all pages in the web application.
 
 
 
@@ -255,10 +258,134 @@ is a basic template to wipe out all built-in styling for HTML elements.
 stylesheet also removes browser inconsistencies for HTML elements, but instead of removing everything like CSS Reset, normalize.css will preserve some useful defaults
 ## Sass less
 advantages against css, nested syntax, can define variables, math functions. (var declaration with @)
+## + selector
+b element that directly follow element a
+```css
+a + b
+```
+## ~ selector
+all b elements that follow element a
+```css
+a ~ b
+```
+## first:child selector
+first p element
+```css
+  p:first-child;
+```
+## only-child selector
+element for which parents are p
+```css
+  p:only-child;
+```
+## last-child selector
+last child
+```css
+  p:last-child;
+```
+## nth-child selector
+second child
+```css
+  p:nth-child(2);
+```
+## nth-last-child selector
+second last child
+```css
+  p:nth-last-child(2);
+```
+## first-of-type selector
+self explanatory
+```css
+  p:first-of-type;
+```
+## nth-of-type selector
+self explanatory
+```css
+  p:nth-of-type;
+```
+## nth-of-type(An+B) selector
+self explanatory (different combinations)
+```css
+  p:nth-of-type(An+B);
+```
+## last-of-type selector
+self explanatory
+```css
+  p:last-of-type;
+```
+## empty selector
+selects elements that don't have any other elements inside
+```css
+  p:empty;
+```
+## not selector
+self explanatory
+```css
+  p:not(X);
+
+```
+## attribute selector
+selects elements with type
+```css
+[type]
+a[type]
+[type="someType"]
+[type^="startsWith"]
+[type$="endsWith"]
+[type*="contains"]
+```
 
 
-
-
+## Flexbox
+justify content align items horizontally
+```css
+a {
+  display: flex;
+  justify-content: flex-end;
+}
+```
+align-items align items vertically
+```css
+a {
+  display: flex;
+  align-items: flex-start;
+}
+```
+flex-direction changes direction
+```css
+a {
+  display: flex;
+  flex-direction: row;
+}
+```
+order
+```css
+a {
+  display: flex;
+  order: 1
+}
+```
+align-self is the same as align-items for single elem
+```css
+a {
+align-self: flex-end
+}
+```
+flex-wrap spread items
+```css
+a {
+  display: flex;
+flex-wrap: wrap
+}
+```
+flex-flow is combination of flex-direction and flex-wrap
+align-content to align multiple lines
+## Grid
+grid-column-start - grid-column-end (fill the grid columns)
+grid-column
+grid-row
+grid-area (column + row)
+grid-template
 
 
 
@@ -352,7 +479,15 @@ is an automated sequence of tasks that runs on each push/release.
     * push (git)
     * deployment (optional)
 ## the build tasks execution can be done with CLI (npm)
-
+## Difference between tilde(~) and caret(^)
+1.0.2
+* 1 - major
+* 0 - minor
+* 2 - patch
+### ~
+For the specified minor version, ~ will match the most recent patch version.
+### ^
+For the specified major version, ^ will match the most recent minor version.
 
 
 
@@ -373,6 +508,18 @@ The JavaScript engine treats all variable declarations using “var” as if the
 The binding which defines the scope of execution. Function declared in a function is a Closure. Inner function can access the parent function variables.
 ## var and let diff:
 The scope of a variable defined with var is function scope or declared outside any function, global. The scope of a variable defined with let is block scope. For example: var declared in a function is available outside of a function. Let declared in a function is not available outside the function. Const also has a block scope.
+```js
+var y = 234;
+var z = y
+y = 23;
+console.log(z);  // Returns 234
+
+var obj = { name: "Vivek", surname: "Bisht" };
+var obj2 = obj;
+obj1.name = "Akki";
+console.log(obj2);
+// Returns {name:"Akki", surname:"Bisht"
+```
 ## Js advantages:
 client side execution, testing js in console of browser, support major browsers, easy syntax. If we want to limit scope of var, we can use IIFE:
 ```js
@@ -416,6 +563,10 @@ globalObject
 ```
 ## scope
 The current context of execution.
+## scopes:
+* Global
+* Function
+* Block (let and const)
 ## Difference between == and ===
 With == values are being compared with their values, but not types. With === values are being compared with values and types.
 ## Imutabillity
@@ -432,10 +583,22 @@ $, _, and letters.
 JavaScript code modules let multiple privileged JavaScript scopes share code. Example of the module is any code that we imported in out current code.
 ## This js
 ES5 bind and ES6 call and apply methods are forwarding this, and by that change the context of function. In strict mode this inside the function will be undefined, in non-strict mode, this will be window or other global object. This in arrow functions represents a global object.
+The value of “this” keyword will always depend on the object that is invoking the function. Arrow functions don't have this of their own. Apply, call and bind will not work.
+The this keyword inside an arrow function, does not refer to the object calling it. It rather inherits its value from the parent scope which is the window object in this case
 ## Promise
 The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value. Promise.all([promise1, promise2, promise3]).then(function(values) {... is a method which is used to call multiple parallel promises. If any of the promises fail in its execution, promise all fails.
 ## async functions return AsyncFunction object.
 These functions operate in a separate order then the rest of the code via the event loop, returning implicit Promise as its result. An async function can contain await expression that pauses the execution to wait for the passed promise resolution, then resumes execution.
+```js
+async function f() {
+  const promise = new Promise((resolve, _reject) => {
+    setTimeout(() => resolve("done!"), 1000)
+  });
+  const result = await promise; // wait until the promise resolves (*)
+  alert(result); // "done!"
+}
+f();
+```
 ## await pauses the current async function and returns from it.
 Once the awaited result is ready, the execution of the function continues where it left off.
 ## Many of the user interface mechanisms of browsers also run in the JavaScript process (as tasks). Therefore, long-running JavaScript code can block the user interface.
@@ -700,6 +863,15 @@ makes several changes to semantics:
   * Silent errors throw errors (changing object after freeze, this in functio is undefined instead of window)
   * Some optimizations so could run faster
   * Prohibits syntax for next releases
+Chrome console is not in strict mode
+```js
+// strict mode inside chrome console
+(function()
+{
+    'use strict';
+    // write code
+}());
+```
 ## Object.freeze(obj).
 First level of object property cannot be changed.
 ## Self invoking function
@@ -715,6 +887,12 @@ converts both values to primitive values (string or number, and does addition)
 ## Object.is(a, b)
 is even more strict then ===
 ## >= and <= are strict
+## < and >
+will convert operands to number:
+```js
+true < 2 // true
+true > 1 // false, true is converted to 1
+```
 ## ?? operator is used
 when only null or undefined needs to be checked: a ?? b (if a i null or undefined)
 ## The comma operator (,)
@@ -732,11 +910,12 @@ It is commonly used in for loop
 ## a in b, check if b.a
 ## js is single threaded
 ## event loop
-  * setTimeout is provided by the browser, js is calling the function whichinvokes js function after given time (it pushes callback on taks queue, eventloop puts first thing on the stack from task queue if stack is empty)
+  * setTimeout is provided by the browser, js is calling the function which invokes js function after given time (it pushes callback on taks queue, eventloop puts first thing on the stack from task queue if stack is empty)
   * setTimeout with zero time is used to delay callback until stack is cleared
-  * ajax request lives in a browser as web api. When it completes, callback ispushed in to the queue, it is picked up by the event loop and when stack isempty callback will execute
+  * ajax request lives in a browser as web api. When it completes, callback is pushed in to the queue, it is picked up by the event loop and when stack isempty callback will execute
   * to define async forEach (which is synchrounous) use setTimeout with delaytime 0 each time callback is called
-  * Microtasks and Macrotasks: setTimeout, onClick are Macrotasks and all tasksare executed sequentally. Microtask queue is processed after Marcotasks(Promise)
+  * Microtasks and Macrotasks: setTimeout, onClick are Macrotasks and all tasks are executed sequentally. Microtask queue is processed after Macrotasks.
+  * Microtasks come solely from our code. (execution of Promises then, catch, finally)
   * event loop (microtasks and macrotasks)
     * Check if there is any task available in the macrotasks queue.
     * If so and this task is running, wait until it is completed before gointo the next step. If not, go directly to step 3.
@@ -745,6 +924,30 @@ It is commonly used in for loop
   * event loop executions tasks
   * task sources add tasks
   * a task is finished when it reaches return keyword
+  * rendering never happens while engine is executing a task
+  * Immediately after every macrotask, the engine executes all tasks from microtask queue, prior to running any other macrotasks or rendering or anything else.
+  ```js
+  setTimeout(() => alert("timeout"));
+
+Promise.resolve()
+  .then(() => alert("promise"));
+
+alert("code");
+What’s going to be the order here?
+
+code shows first, because it’s a regular synchronous call.
+promise shows second, because .then passes through the microtask queue, and runs after the current code.
+timeout shows last, because it’s a macrotask.
+  ```
+* event loop alg:
+  * Dequeue and run the oldest task from the macrotask queue (e.g. “script”).
+  * Execute all microtasks:
+  * While the microtask queue is not empty:
+  * Dequeue and run the oldest microtask.
+  * Render changes if any.
+  * If the macrotask queue is empty, wait till a macrotask appears.
+  * Go to step 1.
+
 ## undeclared variable is different from undefined (browser gives an error)
 ## when use const, varible has to be initialized
 ## type of undeclared and undefined will return 'undefined'
@@ -833,6 +1036,16 @@ String(x); // recomended
 '' + x;
 x.toString(); // does not work for undefined and null
 String(['a', ['b']]); // 'a,b' it will hide some details
+```
+## convert to number
+```js
+parseInt(string, base)
++x
+-x
+```
+## check if Object
+```js
+(a !== null) && (a.constructor === Object)
 ```
 ## Stringifying functions, returns their source code
 ```js
@@ -1019,6 +1232,42 @@ does not parse regex values. For this reviver param must be used
 ## Date js does not support time zones.
 ## code splitting
 Lazy load just the things that are currently needed for app. import supports code splitting.
+## negative infinity
+if we divide negative number with zero
+## File read
+* using a webpage and active x objects
+* some js extensions
+## get os
+```js
+window.navigator.platform
+```
+## pop-up boxes
+* alert
+* confirm
+* prompt
+## void operator
+void operator evaluates expression and returns undefined
+```js
+void(2 == '2') // return undefined
+```
+## blur
+removes focus from an element
+## errors in js
+* Build process errors
+* run time errors
+## encode and decode url
+decodeURI() and encodeURI()
+## MutationObserver
+is a built-in object that observes a DOM element and fires a callback when it detects a change
+## Range object
+```js
+let range = new Range();
+setStart(node, offset)
+setEnd(node, offset)
+```
+
+
+
 
 
 
@@ -1270,6 +1519,12 @@ if it is React element with specific componentClass type
   * Redux
   * mobix
   * vuex (for Vue.js)
+## namespace
+group of desired functions, variables under a unique name. It is used for modularity
+
+
+
+
 
 
 
@@ -1759,4 +2014,31 @@ const isSameTree = (p, q) => {
 */
 ```
 
+```js
+const isMirror = (t1, t2) => {
+  if (t1 === null && t2 === null) return true;
+  if (t1 === null || t2 === null) return false;
+  return (t1.val === t2.val)
+      && isMirror(t1.right, t2.left)
+      && isMirror(t1.left, t2.right);
+};
+const isSymmetric = root => isMirror(root, root);
+// isMirror([1,2,2,3,4,4,3]) // true
+// isMirror([1,2,2,null,3,null,3]) // false
+```
 
+```js
+const maxDepth = root => {
+    const check = (node, depth = 0) => {
+        if (!node) return 0;
+        if (node.val || node.val === 0) depth++;
+        const leftChildDepth = node.left ? check(node.left, depth) : depth;
+        const rightChildDepth = node.right ? check(node.right, depth) : depth;
+        return  leftChildDepth > rightChildDepth ? leftChildDepth : rightChildDepth;
+    };
+    return check(root);
+};
+// maxDepth([3,9,20,null,null,15,7]) // 3
+// maxDepth([1,null,2]) // 2
+// maxDepth([]) // 0
+```
