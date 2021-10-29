@@ -18,9 +18,11 @@ HEAD Same request like GET but without expecting response body.
 DELETE Deletes the specified resource.
 ## Html and xhtml differences
 Both are languages in which web page is written. Html is markup language based and xhtml is xml based. Xhtml is derived from html to match xml standards. Hence xhtml is stricted.
+## GraphQL
+a query language for APIs
 ## Rest
 Representational State Transfer (REST) is an architectural style that defines a set of constraints and properties based on HTTP.
-### Constraints:
+### REST Constraints:
 Uniform Interface - Resource-Based
 Stateless
 Cacheable
@@ -399,6 +401,8 @@ grid-template
 ## Design Patterns
 Is a general repeatable solution to a commonly occurring problem in software design. 
     * SINGLETON A class of which only a single instance can exist.
+    * OBSERVER An object called subject maintains the list of dependents, called observers and notifies them automatically of any state changes.
+    * FACADE is trying to hide underlying complexity, allowing you to work with api.
     * FACTORY METHOD Creates an instance of several derived classes.
     * PROTOTYPE A fully initialized instance to be copied or cloned.
     * DECORATOR Add responsibilities to objects dynamically.
@@ -502,6 +506,9 @@ For the specified major version, ^ will match the most recent minor version.
 
 
 # JS:
+## Javascript engine
+* v8 for Chrome and Opera
+* SpiderMonkey for Firefox
 ## hoisting
 The JavaScript engine treats all variable declarations using “var” as if they are declared at the top of a functional scope (if declared inside a function) or global scope (if declared outside of a function) regardless of where the actual declaration occurs. This essentially is “hoisting”
 ## closure
@@ -757,6 +764,9 @@ function toggleDone (event) {
 adding event listener to parrent will propagate 
 ## adding event listener
 to element will add event listener to all the children (event delagation) 
+```js
+someElement.addEventListener("mouseup", handleMouseUp); // third param - options
+```
 ## process of delegation execution is event bubbling
 ## difference between target and currentTarget
 target is the thing that is clicked, and currentTarget is where you attached eventListener (these two can be different because delegation for example)
@@ -1610,6 +1620,18 @@ import store from 'blaBla/store';
     something,
   } = store.getState();
 ```
+## add redux tools
+``` js
+const store = createStore(
+    connectRouter(history)(App),
+    compose(
+        applyMiddleware(
+            ...middleware
+        ),
+        window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
+    )
+);
+```
 
 
 
@@ -1796,6 +1818,33 @@ function unary(fn) {
 
 
 # JS Chanlenges:
+```js
+// scroll to the top
+const scrollToTop = () => window.scrollTo(0, 0);
+// swapping 2 vars
+[foo, bar] = [bar, foo];
+```
+```js
+// create variable with name as a variable
+const a = 'test';
+this[a] = 1;
+```
+```js
+  const debounce = (callback, timer, timeout) => (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => callback(args), timer);
+  };
+  // or
+  // const debounce = (callback, delay) => args => {
+  //   clearTimeout(debounce.timerId);
+  //   debounce.timerId = setTimeout(() => callback(args), delay);
+  // }
+
+const process = debounce((someStr) => console.log(someStr), 5000);
+process('test');
+process('test');
+process('test');
+```
 ```js
 const twoSum = function(nums, target) {
     return nums.reduce((acc, curr, index) => {
@@ -2041,4 +2090,43 @@ const maxDepth = root => {
 // maxDepth([3,9,20,null,null,15,7]) // 3
 // maxDepth([1,null,2]) // 2
 // maxDepth([]) // 0
+```
+
+```js
+// helper
+const maxDepth = root => {
+    const check = (node, depth = 0) => {
+        if (!node) return 0;
+        if (node.val || node.val === 0) depth++;
+        const leftChildDepth = node.left ? check(node.left, depth) : depth;
+        const rightChildDepth = node.right ? check(node.right, depth) : depth;
+        return  leftChildDepth > rightChildDepth ? leftChildDepth : rightChildDepth;
+    };
+    return check(root);
+};
+
+// a binary tree in which the left and right subtrees of every node differ in height by no more than 1
+const isBalanced = function(root) {
+    if (!root) {
+        return true;
+    }
+   const leftMax = maxDepth(root.left);
+   const rightMax = maxDepth(root.right);
+   const diff = leftMax - rightMax;
+    if (![-1,0,1].includes(diff)) return false;
+    return isBalanced(root.left) && isBalanced(root.right);
+};
+
+// is there a path (root to leaf, leaf doesn't have children) which has desired sum.
+const hasPathSum = (root, targetSum, currentSum = 0) => {
+    if (!root) return false;
+    const newCurrentSum = currentSum + root.val;
+    const isLeaf = !root.left && !root.right;
+    if (isLeaf && newCurrentSum === targetSum) return true;
+    const leftBranch = !!root.left && hasPathSum(root.left, targetSum, newCurrentSum);
+    const rightBranch = !!root.right && hasPathSum(root.right, targetSum, newCurrentSum);
+    return leftBranch || rightBranch;
+};
+
+
 ```
