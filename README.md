@@ -637,12 +637,15 @@ readFileAsync('some-file.txt', {encoding: 'utf8'})
 * fetch:
 ```js
 // fetch can be alternative for axios, but axios has some features implemented very simply
+// if result code is 400 it will use then
 fetch('http://example.com/textfile.txt')
   .then(response => response.text())
   .then(text => {
     assert.equal(text, 'Content of textfile.txt\n');
   });
 ```
+## axios, graphql
+use axios for rest, qraphql appollo for rest and graphql
 ## promise combinators:
   * race
   * all
@@ -656,6 +659,9 @@ can be used to set a timeout for your promise. For example: the 'second' promise
 
 ## Promise.race([...promises])
 returns a promise which resolves as soon as any of the input promises resolves and rejects as soon as any of the promises rejects.
+
+## Promise.any([...promises])
+rejects a promise only if all promises are rejected, otherwise it resolves
 
 ## Promise.allSettled method
 takes an array of promises and resolves once all of the promises have either resolved or rejected. Hence, promise returned by this method does not require catch callback as it will always resolve. The then callback receives the status and value of each promise in the order of their appearance.
@@ -992,6 +998,12 @@ console.log(0.1 + 0.2 === 0.30000000000000004); // true
 ```
 As we move from 0 in either direction, we start losing precision for numbers.
 ## Infinity and Nan are also numbers
+## Number writting 
+```js
+1_000_000
+// is equal to:
+1000000
+```
 ## two different codes:
 ```js
 let banana = function() {}
@@ -1098,6 +1110,11 @@ sym * 2 // Type error, similar is for String and toString
     // finally will be executed
 ```
 ## import * - import all
+## dynamic import
+```js
+const loadSomeComponent = () => import('.../something');
+loadSomeComponent();
+```
 ## default export cannot export const since it can define multiple values:
 ```js
 const a = 1, b = 2;
@@ -1140,6 +1157,30 @@ const obj = { test: 1 };
 
 var entries = [["x", 1],["y", 2],["z", 3]];
 var obj = Object.fromEntries( entries );console.log( obj ); // {x: 1, y: 2, z: 3}
+```
+## freeze certain prop of an object
+```js
+const a = { x: 1 }
+
+    Object.defineProperty(a, 'x', { writable: false });
+    a.y = 2;
+    Object.getOwnPropertyDescriptor(a, 'x');
+    // {
+    //   configurable: true,
+    //   enumerable: true,
+    //   value: "1",
+    //   writable: true,
+    // }
+
+    Object.defineProperty(a, 'y', {
+value:"",
+});
+// {
+// configurable: false,
+// enumerable: false,
+// value: "",
+// writable: false,
+// }
 ```
 ## toString function is used
 to determine how to convert to string, for numbers, valueOf function is used
@@ -1374,7 +1415,10 @@ even if they are not given as parameters they are defined by default with: SomeC
 ```
 ## React guarantees that refs are set before componentDidMount or componentDidUpdate hooks.
 ## React.lazy combined with Suspense component
-can be used for lazy loading components. React.lazy currently only supports default exports.
+can be used for lazy loading components. React.lazy currently only supports default exports. It seems that in the meantime React.lazy started to support dynamic imports
+```js
+React.lazy(() => import('...'));
+```
 ## Component that is subscribed to context will read from closest Provider in ancestry
 ```js
 const MyContext = React.createContext(defaultValue); // when provider cannot be found, use default value
@@ -1505,6 +1549,10 @@ const [state, dispatch] = useReducer(stateReducer, []);
 ## setState (class components)
 merge state objects. useState doesn't
 ## if initial state is expensive, useState can receive a function that will eventually initiate state.
+```js
+useState(getComplexComputation())  // wrong
+useState(() => getComplexComputation()) // right
+```
 ## useLayoutEffect
 fires before render method, useEffect fires after render method (not recomended unless useEffect causes issues)
 ## useContext
@@ -1512,6 +1560,34 @@ fires before render method, useEffect fires after render method (not recomended 
 const something = useContext(MyContext);
 ```
 ## useMemo and useCallback help optimize with memoization
+can be used with or without params for complex calculations
+```js
+const memoizedResult = useMemo(() => {
+  return expensiveFunction(propA, propB);
+}, [propA, propB]);
+```
+## React.memo
+```js
+export function Movie({ title, releaseDate }) {
+  return (
+    <div>
+      <div>Movie title: {title}</div>
+      <div>Release date: {releaseDate}</div>
+    </div>
+  );
+}
+export const MemoizedMovie = React.memo(Movie);
+// First render - MemoizedMovie IS INVOKED.
+<MemoizedMovie 
+  title="Heat" 
+  releaseDate="December 15, 1995" 
+/>
+// Second render - MemoizedMovie IS NOT INVOKED.
+<MemoizedMovie
+  title="Heat" 
+  releaseDate="December 15, 1995" 
+/>
+```
 ## useDebugValue can be use when inspecting hooks for easier debugging
 ## it is recomended to separate state into multiple useState hooks for easier state update (setState doesn't merge objects by definition)
 ## we can useReducer and provide dispatch to child component instead of passing some callback
@@ -1531,6 +1607,15 @@ if it is React element with specific componentClass type
   * vuex (for Vue.js)
 ## namespace
 group of desired functions, variables under a unique name. It is used for modularity
+## use async callback inside useEffect
+```js
+useEffect(() => {
+  (async () => {
+    // body
+  })();
+}, [someEntity])
+```
+
 
 
 
