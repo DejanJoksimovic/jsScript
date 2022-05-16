@@ -47,6 +47,7 @@ preamble found at the top of all documents. Its sole purpose is to prevent a bro
 <!DOCTYPE html>
 ```
 doctype ensures that the browser makes a best-effort attempt at following the relevant specifications, rather than using a different rendering mode that is incompatible with some specifications.
+
 ## ajax:
 Asynchronous JavaScript + XML. using a number of existing technologies together, including HTML or XHTML, Cascading Style Sheets, JavaScript, The Document Object Model, XML, XSLT, and most importantly the XMLHttpRequest object.
 When these technologies are combined in the Ajax model, web applications are able to make quick, incremental updates to the user interface without reloading the entire browser page. Although X in Ajax stands for XML, JSON is used more than XML nowadays because of its many advantages such as being lighter and a part of JavaScript. Both JSON and XML are used for packaging information in Ajax model.
@@ -101,6 +102,13 @@ When cross domain request is to be made, use jsonp (better alternative is CORS) 
 The session manager creates HTTP sessions and manages the life cycles of HTTP sessions that are associated with the application.
 ## Semantic
 In programing, Semantics refers to the meaning of a piece of code — for example "what effect does running that line of JavaScript have?", or "what purpose or role does that HTML element have" (rather than "what does it look like?".)
+```html
+<footer>
+<header>
+<nav>
+<section>
+...
+```
 ## Html form:
 The HTML <form> element represents a document section that contains interactive controls for submitting information to a web server.
 Form can be submitted with submit() using js
@@ -220,6 +228,18 @@ In CSS, selectors are used to target the HTML elements on our web pages that we 
 .a > .b selects b where it is direct decendent of a
 .a, .b selects a or b
 ```
+## Units
+vh: 1% of the viewport's height
+vw: 1% of the viewport's width
+pt: somewhat larger then px
+in: inches
+cm: cm
+mm: mm
+em: font size of parrent
+rem: font size of root element
+## Bubling
+When an event happens on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors.
+
 ## CSS Selectors types:
 Simple selectors: type, class, id
 Attribute selectors: based on attribute values
@@ -585,7 +605,7 @@ are those objects supplied by JavaScript. Examples of these are String, Number, 
 ## Host objects
 are objects that are supplied to JavaScript by the browser environment. Examples of these are window, document, forms, etc.
 ## Js var starts with
-$, _, and letters.
+- $, _, and letters.
 ## Js modules
 JavaScript code modules let multiple privileged JavaScript scopes share code. Example of the module is any code that we imported in out current code.
 ## This js
@@ -754,6 +774,10 @@ JavaScript only has one construct: objects. Each object has a private property w
 * When a function is created in JavaScript, JavaScript engine adds a prototype property to the function. This prototype property is an object (called as prototype object) which has a constructor property by default. Constructor property points back to the function on which prototype object is a property. We can access the function’s prototype property using the syntax functionName.prototype.
 ## Event propagation
 the way to describe order of events in web browser (two kinds: to child and to parent). Stop propagation: event.stopPropagation, event.preventDefault.
+3 phases:
+- Capturing phase – the event goes down to the element.
+- Target phase – the event reached the target element.
+- Bubbling phase – the event bubbles up from the element.
 ## A callback function
 is a function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action.
 ## An event in JavaScript
