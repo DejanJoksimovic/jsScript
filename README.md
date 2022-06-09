@@ -427,6 +427,12 @@ Is a general repeatable solution to a commonly occurring problem in software des
     * PROTOTYPE A fully initialized instance to be copied or cloned.
     * DECORATOR Add responsibilities to objects dynamically.
     * ...
+## SOLID principles
+* Single Responsibility - Each module should be responsible to one, and only one, actor (actor - user - stakeholder - module)
+* Open-Closed - should be open for extension, but closed for modification
+* Liskov Substitution - build software systems from interchangeable parts
+* Interface Segregation - avoid depending on things that they don’t use
+* Dependency injection - enables you to replace dependencies without changing the class that uses them
 ## object oriented languages:
 inheritance, polymorphism, encapsulation
 ## Cookies
@@ -531,10 +537,30 @@ For the specified major version, ^ will match the most recent minor version.
 * SpiderMonkey for Firefox
 ## hoisting
 The JavaScript engine treats all variable declarations using “var” as if they are declared at the top of a functional scope (if declared inside a function) or global scope (if declared outside of a function) regardless of where the actual declaration occurs. This essentially is “hoisting”
+```js
+a;
+console.log(a)
+// Uncaught ReferenceError: a is not defined
+
+console.log(a)
+var a;
+// undefined
+
+a = 1;
+console.log(a)
+var a;
+// 1
+
+console.log(a)
+a = 1;
+var a;
+// undefined
+```
 ## closure
 The binding which defines the scope of execution. Function declared in a function is a Closure. Inner function can access the parent function variables.
 ## var and let diff:
-The scope of a variable defined with var is function scope or declared outside any function, global. The scope of a variable defined with let is block scope. For example: var declared in a function is available outside of a function. Let declared in a function is not available outside the function. Const also has a block scope.
+The scope of a variable defined with var is function scope or if declared outside any function, global. The scope of a variable defined with let is block scope. For example: var declared in a function is available above it's declaration but not out of a function. Let declared in a function is not available outside the function and before it's declaration. Const also has a block scope. Hoisting is only tied to var. Let cannot be redclared.
+## refences and values
 ```js
 var y = 234;
 var z = y
@@ -1306,7 +1332,7 @@ iter.next() === {value: undefined, done: true};
 does not parse regex values. For this reviver param must be used
 ## Date js does not support time zones.
 ## code splitting
-Lazy load just the things that are currently needed for app. import supports code splitting.
+Lazy load just the things that are currently needed for app. import supports code splitting. With Code splitting, the bundle can be split to smaller chunks where the most important chunk can be loaded first and then every other secondary one lazily loaded.
 ## negative infinity
 if we divide negative number with zero
 ## File read
@@ -1439,7 +1465,7 @@ even if they are not given as parameters they are defined by default with: SomeC
 ```
 ## React guarantees that refs are set before componentDidMount or componentDidUpdate hooks.
 ## React.lazy combined with Suspense component
-can be used for lazy loading components. React.lazy currently only supports default exports. It seems that in the meantime React.lazy started to support dynamic imports
+can be used for lazy loading components. React.lazy currently only supports default exports. It seems that in the meantime React.lazy started to support dynamic imports. This is done through code spliting behind the hood.
 ```js
 React.lazy(() => import('...'));
 ```
