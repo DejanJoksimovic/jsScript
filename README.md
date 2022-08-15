@@ -215,6 +215,10 @@ is query language for xml
 
 
 # CSS:
+
+## adaptive vs responsive css design:
+A responsive design can change its layout and appearance based on the screen size of the device it's accessed on, from a large desktop computer to a small mobile phone. An adaptive design requires the creation of a different layout for each device the website will be accessed on
+
 ## Inline and block elements:
 A block-level element always starts on a new line and takes up the full width available (stretches out to the left and right as far as it can).
 An inline element does not start on a new line and only takes up as much width as necessary.
@@ -472,7 +476,8 @@ are cryptographic protocols designed to provide communications security over a c
 * After building tcp connection, ssl handshake is started. Client send number of specifications. (version of ssl, compression method to use…) After this is done server sends certificate. Having verified the certificate, key Is exchanged. From now on, server and client can compute the key for symmetric encryption. Server verifies that message authentification code is correct and send message that can be correctly decripted.
 ## CDN stands for Content Delivery Network.
 CDNs deliver cached, static content from a network of servers across the globe.
-
+## monorepo
+A monorepo (mono repository) is a single repository that stores all of your code and assets for every project. It is not a good idea to use git with monorepo, it gets really complex to use.
 
 
 
@@ -842,7 +847,7 @@ takes JavaScript code, transforms it and returns JavaScript code in a different 
 ## Bundlers
 take JavaScript and CSS code written as separate modules (often hundreds of them), and combine them together into a few files better optimized for the browsers. (webpack)
 ## Webpack
-is an open-source JavaScript module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset
+is an open-source JavaScript module bundler. Its main purpose is to bundle JavaScript files for usage in a browser, yet it is also capable of transforming, bundling, or packaging just about any resource or asset. At its core, webpack is a static module bundler for modern JavaScript applications. When webpack processes your application, it internally builds a dependency graph from one or more entry points and then combines every module your project needs into one or more bundles, which are static assets to serve your content from.
 ## RequireJS is a JavaScript file and module loader
 ## The instanceof operator
 tests whether the prototype property of a constructor appears anywhere in the prototype chain of an object
@@ -1265,6 +1270,10 @@ a.test = 1;
 ## a way to check if something is an array:
 ```js
 Array.isArray(something);
+// or
+something.constructor === Array
+something instanceof Array
+!!something.length
 ```
 ## array like objects
 ```js
@@ -1615,6 +1624,10 @@ can be used with or without params for complex calculations
 const memoizedResult = useMemo(() => {
   return expensiveFunction(propA, propB);
 }, [propA, propB]);
+// components itself can be memoized
+// const list = useMemo(() => <CountriesList countries={countries} />, [
+//     countries
+//   ]);
 ```
 ## React.memo
 ```js
@@ -1665,6 +1678,7 @@ useEffect(() => {
   })();
 }, [someEntity])
 ```
+## react doesn't sanitize href
 
 
 
