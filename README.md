@@ -201,6 +201,22 @@ is query language for xml
 ## viewState vs sessionState
 * 'ViewState' is specific to a page in a session.
 * 'SessionState' is specific to user specific data that can be accessed across all pages in the web application.
+## window.postMessage
+* method safely enables cross-origin communication between window objects
+```js
+postMessage(message, targetOrigin)
+// message - data to send
+// targetOrigin '*' should be avoided, will be available to all window objects
+```
+* window can listen to these messages:
+```js
+window.addEventListener("message", (event) => {
+  if (event.origin !== "http://example.org:8080")
+    return;
+
+  // …
+}, false);
+```
 
 
 
@@ -412,6 +428,9 @@ grid-column
 grid-row
 grid-area (column + row)
 grid-template
+## CSS import and link
+two common ways to add external css to html
+
 
 
 
@@ -479,7 +498,19 @@ CDNs deliver cached, static content from a network of servers across the globe.
 ## monorepo
 A monorepo (mono repository) is a single repository that stores all of your code and assets for every project. It is not a good idea to use git with monorepo, it gets really complex to use.
 
+## Node JS is not multithreaded but imitates this
 
+## husky adds pre commit
+```bash
+npx husky add .husky/pre-commit "npm test"
+git add .husky/pre-commit
+git commit -m "Keep calm and commit"
+# `npm test` will run
+```
+## ramda
+set of useful js functions (functional approach) https://ramdajs.com/docs/#add
+## A CSS Injection vulnerability
+involves the ability to inject arbitrary CSS code in the context of a trusted web site which is rendered inside a victim's browser
 
 
 
