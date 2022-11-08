@@ -2309,4 +2309,32 @@ const hasPathSum = (root, targetSum, currentSum = 0) => {
 };
 
 
+// given number of pascal triangle level determine array of arrays for this level
+
+const generate = function(numRows) {
+
+    if (numRows === 1) return [[1]];
+    let pascalTriangle = [[1], [1,1]];
+
+    if (numRows === 2) return pascalTriangle;
+
+   const getRow = (iteration, position = 0, rowSoFar = []) => {
+       switch(true) {
+            case position === 0:
+                return getRow(iteration, position + 1, [1]);
+            case position === pascalTriangle.length:
+                return [...rowSoFar, 1];
+            default:
+                return getRow(iteration, position + 1, [...rowSoFar, pascalTriangle[iteration -1][position - 1]+pascalTriangle[iteration -1][position]]);
+       }
+   };
+
+   for(i = 2; i<numRows;i++) {
+    pascalTriangle = [...pascalTriangle, getRow(i)];
+   }
+   return pascalTriangle
+
+};
+
+
 ```
