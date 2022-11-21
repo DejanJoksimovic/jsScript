@@ -1710,7 +1710,7 @@ useEffect(() => {
 }, [someEntity])
 ```
 ## react doesn't sanitize href
-
+## The only difference between the fragment and <> is that <> doesn't support key
 
 
 
