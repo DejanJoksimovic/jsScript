@@ -511,6 +511,16 @@ git commit -m "Keep calm and commit"
 set of useful js functions (functional approach) https://ramdajs.com/docs/#add
 ## A CSS Injection vulnerability
 involves the ability to inject arbitrary CSS code in the context of a trusted web site which is rendered inside a victim's browser
+## Polyfilling
+Taking the definition of a newer feature and producing code that offers equivalent behavior, but is able to run in older JS environments.
+## Transpiling
+Using a tool that converts your newer code into older code equivalents
+## NVMRC
+- add .nvmrc to root of your project
+- content: v18.12.1
+- nvm use command will change to nvm version specified
+## Service worker 
+Service workers essentially act as proxy servers that sit between web applications, the browser, and the network (when available). They are intended, among other things, to enable the creation of effective offline experiences, intercept network requests and take appropriate action based on whether the network is available, and update assets residing on the server.
 
 
 
@@ -522,7 +532,7 @@ involves the ability to inject arbitrary CSS code in the context of a trusted we
 
 # Build process:
 ## Transpiler is different from compiler.
-It turns code into another code. Compiler turns code into machine code that is understandable.
+It turns code into another code. Compiler turns code into machine code that is understandable. Example: from es6 to es5
 ## Package managers
 are tools that allow you to manage dependencies in your project. (yarn and npm, both of them are clients for npm package registry)
 ## Node.js
@@ -573,6 +583,7 @@ For the specified major version, ^ will match the most recent minor version.
 * SpiderMonkey for Firefox
 ## hoisting
 The JavaScript engine treats all variable declarations using “var” as if they are declared at the top of a functional scope (if declared inside a function) or global scope (if declared outside of a function) regardless of where the actual declaration occurs. This essentially is “hoisting”
+A function declaration has "hoisting"
 ```js
 a;
 console.log(a)
@@ -592,8 +603,27 @@ a = 1;
 var a;
 // undefined
 ```
+Functions are hoisted before variables.
+```js
+foo();
+var foo;
+function foo() {
+	console.log( 1 );
+}
+foo = function() {
+	console.log( 2 );
+};
+// 1 will be logged
+```
 ## closure
 The binding which defines the scope of execution. Function declared in a function is a Closure. Inner function can access the parent function variables.
+## compound operator
+Compound Assignment examples: -=, *=, and += are compound operators that combine a math operation with assignment
+## strict mode
+You can opt in to strict mode for an individual function, or an entire file, depending on where you put the strict mode pragma.
+```js
+use strict
+```
 ## var and let diff:
 The scope of a variable defined with var is function scope or if declared outside any function, global. The scope of a variable defined with let is block scope. For example: var declared in a function is available above it's declaration but not out of a function. Let declared in a function is not available outside the function and before it's declaration. Const also has a block scope. Hoisting is only tied to var. Let cannot be redclared.
 ## refences and values
@@ -683,7 +713,7 @@ async function f() {
   const promise = new Promise((resolve, _reject) => {
     setTimeout(() => resolve("done!"), 1000)
   });
-  const result = await promise; // wait until the promise resolves (*)
+  const result = await promise; // wait until the promise resolves (*) and return result 'from' promise
   alert(result); // "done!"
 }
 f();
@@ -1406,7 +1436,33 @@ let range = new Range();
 setStart(node, offset)
 setEnd(node, offset)
 ```
-
+## Check if variable is declared
+```js
+typeof a !== "undefined"
+```
+## boxing wrappers:
+str.length or str.toUpperCase() can be used because primitive types such as string or number get wrapped by boxing wrappers which allows use of methods (examples mentioned)
+## web worker:
+A separate instance of js engine allowing task parallelism. Workers share resources via postMessage API
+## Thenable:
+Any object (or function) with a then(..) function on it is assumed to be a thenable. Any place where the Promise mechanisms can accept and adopt the state of a genuine promise, they can also handle a thenable.
+## function name:
+```js
+function def1() {
+  let a = 5;
+}
+def1.name = 'def1'
+var abc = function def() {
+  let a = 5;
+}
+abc.name // def
+var abc1 = function () {
+  let a = 5;
+}
+abc1.name // abc1
+```
+## Lexical scope
+When we access a variable from a child scope to the parent scope, this is known as being available in the “lexical” scope.
 
 
 
