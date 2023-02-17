@@ -249,14 +249,14 @@ In CSS, selectors are used to target the HTML elements on our web pages that we 
 .a, .b selects a or b
 ```
 ## Units
-vh: 1% of the viewport's height
-vw: 1% of the viewport's width
-pt: somewhat larger then px
-in: inches
-cm: cm
-mm: mm
-em: font size of parrent
-rem: font size of root element
+- vh: 1% of the viewport's height
+- vw: 1% of the viewport's width
+- pt: somewhat larger then px
+- in: inches
+- cm: cm
+- mm: mm
+- em: font size of parrent
+- rem: font size of root element
 ## Bubling
 When an event happens on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors.
 
