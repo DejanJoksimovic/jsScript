@@ -261,13 +261,13 @@ In CSS, selectors are used to target the HTML elements on our web pages that we 
 When an event happens on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors.
 
 ## CSS Selectors types:
-Simple selectors: type, class, id
-Attribute selectors: based on attribute values
-Pseudo classes: elements that exist in certain state (hovered by mouse, check box that is currently disabled-enabled, element that is the first child..)
-Pseudo elements: Match part of the content that is in the certain position in relation to the element.
-Combinators: self explanatory
-The render tree is sort of like the DOM tree, but doesn't match it exactly. The render tree knows about styles, so if you're hiding a div with display: none, it won't be represented in the render tree.
-Multiple selectors: selectors separated by commas.
+- Simple selectors: type, class, id
+- Attribute selectors: based on attribute values
+- Pseudo classes: elements that exist in certain state (hovered by mouse, check box that is currently disabled-enabled, element that is the first child..)
+- Pseudo elements: Match part of the content that is in the certain position in relation to the element.
+- Combinators: self explanatory
+- The render tree is sort of like the DOM tree, but doesn't match it exactly. The render tree knows about styles, so if you're hiding a div with display: none, it won't be represented in the render tree.
+- Multiple selectors: selectors separated by commas.
 ## CSS cascade: is a mechanism which controls which rule wins
 ## Specificity
 is basically a measure of how specific a selector is — how many elements it could match. Id selectors have high specificity. Only way to defeat specificity is !important
