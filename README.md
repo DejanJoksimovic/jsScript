@@ -957,6 +957,23 @@ var keypresses = trackEvent( newEvent1 );
 
 keypresses = trackEvent( newEvent2, keypresses );
 ```
+## tail optimization for recursion
+```js
+// standard recursion
+const recursive = (n) => {
+  if (n === 0) return "a dream";
+  let dreams = recursive(n - 1);
+  return dreams + " within a dream";
+}
+// tail recursive (should be less stack heavy)
+const tailRecursive = (n) => {
+  const helper = (n, dreams) => {
+    if (n === 0) return dreams;
+    return helper(n-1, dreams+" within a dream");
+  }
+  return helper(n);
+}
+```
 ## Binary recursion
 the function calls itself twice within implmentation
 ## Memoization
@@ -1047,6 +1064,24 @@ for(let i = 0;i<10;i++>) { }
 for(let number of [1,2,3]) {}
 // since string is iterable, we can do something like this
 for(let char of "Dejan") {}
+```
+## how to make param mandatory
+```js
+mandatory = () => {
+  throw new Error('Missing parameter!');
+}
+
+foo = (bar = mandatory()) => {}
+```
+## ~~ is the same as Math.floor()
+```js
+Math.floor(4.9) === 4  //true
+~~4.9 === 4  //true
+```
+## ** is the same as Math.pow()
+```js
+Math.pow(2,3); // 8
+2**3 // 8
 ```
 ## JSON doesn't support undefined, only null
 ## a in b, check if b.a
