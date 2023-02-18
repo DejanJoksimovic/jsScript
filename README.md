@@ -1092,6 +1092,7 @@ Math.pow(2,3); // 8
   * ajax request lives in a browser as web api. When it completes, callback is pushed in to the queue, it is picked up by the event loop and when stack isempty callback will execute
   * to define async forEach (which is synchrounous) use setTimeout with delaytime 0 each time callback is called
   * Microtasks and Macrotasks: setTimeout, onClick are Macrotasks and all tasks are executed sequentally. Microtask queue is processed after Macrotasks.
+  * mircotasks for asynchronous elements, macrotasks for synchrounous
   * Microtasks come solely from our code. (execution of Promises then, catch, finally)
   * event loop (microtasks and macrotasks)
     * Check if there is any task available in the macrotasks queue.
