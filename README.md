@@ -1038,6 +1038,16 @@ console.log(x);
 // expected output: 3
 ```
 It is commonly used in for loop
+## of operator
+can be used for "for" loop
+```js
+// standard
+for(let i = 0;i<10;i++>) { }
+// using operator "of"
+for(let number of [1,2,3]) {}
+// since string is iterable, we can do something like this
+for(let char of "Dejan") {}
+```
 ## JSON doesn't support undefined, only null
 ## a in b, check if b.a
 ## js is single threaded
