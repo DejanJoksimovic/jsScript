@@ -217,6 +217,8 @@ window.addEventListener("message", (event) => {
   // …
 }, false);
 ```
+## IndexedDB
+is a database that is built into a browser
 
 
 
