@@ -580,6 +580,39 @@ For the specified major version, ^ will match the most recent minor version.
 
 
 # JS:
+## classes
+- Class is a function under the hood. typeof class is function
+- getOwnProperty name will list all methods and constructor
+- Classes are not just syntatic sugar (though very similar behavour can be acheived with functions) IsClassConstructor is set true on classes
+- class always works in strict mode
+- classes as functions are first class citizens
+- inside getter and setter we use _something to access something var declared in constructor
+- we can calculate method name with [expression]
+- methods can handle 'this' more secure (if we call the class method from setTimeout 'this' wont be lost) if we use arrow function
+- expression that evaluates to class can be used after extends keyword
+- we can access extended class via super key word. Constructor has to call extended class constructor or there will be an error
+- arrow functions cannot be accessed via super
+- it is not mandatory to ovveride extended class constructor
+- super works thanks to HOMEOBJECT that knows how to resolve parent class
+- static functions are accesible from class directly (Test.staticMethod()) without creating an instance of class
+- 'this' in classes is equal to class itself
+- 'this' for static method is calculated via the “object before dot” rule
+- all inheretance is possible because of prototypes
+- protected props should be used within the class and subclasses
+- convention is to use underscore to mark this is protected (since protected doesn't exist in js)
+- private props can only be used within the class, in js there is almost accepted proposal to use # as a var prefix to make variable private
+- if we want to have read only prop, we simply not implement setter
+- Built in classes are extendible also, such as Array, String ...
+- if we extend built in class, and method returns new array for example, it will return extended array
+- Built in classes don't inherite static methods (Array and Date extend object
+- someClassObject instanceOf class // true, also checks inhereted classes
+-  mixin is a class containing methods that can be used by other classes without a need to inherit from it
+- we can create an object containing methods that should be available in multiple classes and use object assign 
+```js
+Object.assign(SomeClass.prototype, mentionedObject)
+```
+- The Object.assign() static method copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object.
+
 ## Javascript engine
 * v8 for Chrome and Opera
 * SpiderMonkey for Firefox
