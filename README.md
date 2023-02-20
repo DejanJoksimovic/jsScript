@@ -612,7 +612,50 @@ For the specified major version, ^ will match the most recent minor version.
 Object.assign(SomeClass.prototype, mentionedObject)
 ```
 - The Object.assign() static method copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object.
+- Example of all:
+```js
+class TestOrigin {
+    sylosis= 1
+    constructor(newSurname) {
+        this.surname = newSurname
+    }
+    static testSomething() {
+        return false
+    }
+    get surname() {
+        return this._surname
+    }
+    set surname(value) {
+        this._surname = value
+    }
+    ['test' + '2']() {
+        console.log('Dewki2');
+    }
+}
 
+class Test extends TestOrigin {
+    sepultura = 'hellou'
+    constructor(value) {
+        super('testOrigin')
+        this.name = value
+    }
+    static testSomething() {
+        return true
+    }
+    get name() {
+        return this._name
+    }
+    set name(value) {
+        this._name = value
+    }
+    ['test' + '1']() {
+        super.test2()
+        console.log('Dewki1');
+    }
+}
+
+const test = new Test('124124');
+```
 ## Javascript engine
 * v8 for Chrome and Opera
 * SpiderMonkey for Firefox
