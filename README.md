@@ -581,12 +581,13 @@ For the specified major version, ^ will match the most recent minor version.
 
 # JS:
 ## classes
-- Class is a function under the hood. typeof class is function
-- getOwnProperty name will list all methods and constructor
+- Class is a function under the hood. typeof class is function (it is the same as its constructor)
+- Object.getOwnPropertyNames of __proto__ will list all methods and constructor (not from parent class)
+- Object.getOwnPropertyNames of class instance will list all public fields (also from parent class)
 - Classes are not just syntatic sugar (though very similar behavour can be acheived with functions) IsClassConstructor is set true on classes
-- class always works in strict mode
-- classes as functions are first class citizens
-- inside getter and setter we use _something to access something var declared in constructor
+- classes always works in strict mode
+- classes (as functions) are first class citizens
+- if we use getter and/or setter we use those like they are functions but they are invoked with "= something", not "(something)"
 - we can calculate method name with [expression]
 - methods can handle 'this' more secure (if we call the class method from setTimeout 'this' wont be lost) if we use arrow function
 - expression that evaluates to class can be used after extends keyword
@@ -599,62 +600,61 @@ For the specified major version, ^ will match the most recent minor version.
 - 'this' for static method is calculated via the “object before dot” rule
 - all inheretance is possible because of prototypes
 - protected props should be used within the class and subclasses
-- convention is to use underscore to mark this is protected (since protected doesn't exist in js)
-- private props can only be used within the class, in js there is almost accepted proposal to use # as a var prefix to make variable private
+- convention is to use underscore to mark this is protected (since protected doesn't exist in js as a language)
+- private props can only be used within the class, in js there is accepted proposal to use # as a var prefix to make variable private
 - if we want to have read only prop, we simply not implement setter
 - Built in classes are extendible also, such as Array, String ...
 - if we extend built in class, and method returns new array for example, it will return extended array
-- Built in classes don't inherite static methods (Array and Date extend object
+- Built in classes don't inherite static methods (Array and Date extend object, not static methods from object)
 - someClassObject instanceOf class // true, also checks inhereted classes
--  mixin is a class containing methods that can be used by other classes without a need to inherit from it
-- we can create an object containing methods that should be available in multiple classes and use object assign 
+-  mixin is a tehnique in which we create an object with certain methods/props that we want to use accross multiple clasess and then use Object.assign(someClass, object) to add all props/methods to someClass
 ```js
 Object.assign(SomeClass.prototype, mentionedObject)
 ```
 - The Object.assign() static method copies all enumerable own properties from one or more source objects to a target object. It returns the modified target object.
 - Example of all:
 ```js
-class TestOrigin {
-    sylosis= 1
-    constructor(newSurname) {
-        this.surname = newSurname
+class original {
+    constructor(country) {
+        this.surname = 'Petrovic'
+        this.country = country
     }
-    static testSomething() {
-        return false
+    get getCountry() {
+        return this.country;
     }
-    get surname() {
-        return this._surname
+    set setCountry(value) {
+        this.country = value;
     }
-    set surname(value) {
-        this._surname = value
-    }
-    ['test' + '2']() {
-        console.log('Dewki2');
+    stucanje() {
+        console.log('stucanje1')
     }
 }
 
-class Test extends TestOrigin {
-    sepultura = 'hellou'
-    constructor(value) {
-        super('testOrigin')
-        this.name = value
+class klasa extends original {
+    #name
+    constructor(country) {
+        super(country)
+        this.#name = 'test123';
+        this.test = 123
     }
-    static testSomething() {
-        return true
+    get ['get'+'Name1']() {
+        return this.#name;
     }
-    get name() {
-        return this._name
+    set setName(value) {
+        this.#name = value
+        super.setCountry = 'Srbija'
     }
-    set name(value) {
-        this._name = value
+    stucanje() {
+        console.log(this)
+        super.stucanje()
     }
-    ['test' + '1']() {
-        super.test2()
-        console.log('Dewki1');
+    static hellou(b) {
+        console.log(this)
+        console.log("hellou ", b.getName1)
     }
 }
+const b = new klasa('BIH');
 
-const test = new Test('124124');
 ```
 ## Javascript engine
 * v8 for Chrome and Opera
