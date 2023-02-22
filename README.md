@@ -2522,4 +2522,32 @@ const generate = function(numRows) {
 };
 
 
+// with given ammount and given coins calculate coins for amount			     
+			     
+const convertIntoCoins = (amount, coins) => {
+    const checkCoin = (newAmount, newCoins, coinsSoFar = []) => {
+        if (newCoins.length === 0 && newAmount !== 0) return false;
+        if (newCoins.length === 0 && newAmount === 0) return coinsSoFar;
+        const [coin, ...rest] = newCoins;
+        const coinNumber = Math.floor(newAmount/coin)
+        const restAmmount = newAmount % coin;
+        return checkCoin(restAmmount, rest, [...coinsSoFar, {[coin]: coinNumber}])
+        
+    }
+    const helper = (newCoins = coins) => {
+        const candidate = checkCoin(amount, newCoins);
+        if (candidate) return candidate;
+        const [_first, ...coinsRest] = newCoins;
+        return helper(coinsRest);
+    }
+    return helper();
+};
+
+convertIntoCoins(46, [25, 10, 5, 2])
+convertIntoCoins(46, [25, 10, 5, 2, 1])
+
+			     
+			     
+			     
+			     
 ```
