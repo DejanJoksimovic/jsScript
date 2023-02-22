@@ -580,6 +580,11 @@ For the specified major version, ^ will match the most recent minor version.
 
 
 # JS:
+## check if
+- Array (Array.isArray(something) or something.constructor === Array)
+- Boolean, Number, String (typeof something === 'boolean')
+- Function (something && {}.toString.call(something) === '[object Function]') TRICKY
+- Object (typeof something === 'object' && something !== null && !Array.isArray(something))
 ## classes
 - Class is a function under the hood. typeof class is function (it is the same as its constructor)
 - Object.getOwnPropertyNames of __proto__ will list all methods and constructor (not from parent class)
