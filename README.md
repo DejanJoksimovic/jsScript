@@ -443,6 +443,8 @@ two common ways to add external css to html
 
 
 # General:
+## Memory leak
+A memory leak is the gradual deterioration of system performance that occurs over time as the result of the fragmentation of a computer's RAM due to poorly designed or programmed applications that fail to free up memory segments when they are no longer needed.
 ## Design Patterns
 Is a general repeatable solution to a commonly occurring problem in software design. 
     * SINGLETON A class of which only a single instance can exist.
