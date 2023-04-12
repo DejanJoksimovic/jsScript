@@ -219,6 +219,8 @@ window.addEventListener("message", (event) => {
 ```
 ## IndexedDB
 is a database that is built into a browser
+## headless browser
+Web browser without a graphical user interface
 
 
 
