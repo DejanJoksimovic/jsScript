@@ -2550,8 +2550,31 @@ const convertIntoCoins = (amount, coins) => {
 convertIntoCoins(46, [25, 10, 5, 2])
 convertIntoCoins(46, [25, 10, 5, 2, 1])
 
-			     
-			     
+
+
+
+
+
+// write a function that will return random value with each call with falsy param, and same value as previous with truthy param
+
+const getParam = (
+  (param = Math.random()) =>
+    useOld =>
+      useOld ?
+        param
+        :
+        (param = Math.random()) && param
+)()
+
+getParam() // random value
+getParam() // random value x
+getParam(true) // value x
+getParam(true) // value x
+getParam() // random value
+getParam() // random value y
+getParam(true) // value y
+getParam(true) // value y
+// etc...
 			     
 			     
 ```
