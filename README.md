@@ -445,6 +445,8 @@ two common ways to add external css to html
 
 
 # General:
+## Difference between functional and object oriented programming
+Object oriented programming is focusing on 'how system' looks using interfaces and classes as entities, while functional principle is focusing on functional use of the system (something like that :) )
 ## Memory leak
 A memory leak is the gradual deterioration of system performance that occurs over time as the result of the fragmentation of a computer's RAM due to poorly designed or programmed applications that fail to free up memory segments when they are no longer needed.
 ## Design Patterns
