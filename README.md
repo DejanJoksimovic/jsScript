@@ -486,6 +486,12 @@ Open source version control system.
 Is a web-based hosting service for version control using git
 ## Jenkins
 is an open source automation server written in Java. Jenkins helps to automate the non-human part of the software development process, with continuous integration and facilitating technical aspects of continuous delivery
+## Jenkins Blue Ocean
+Blue Ocean is Jenkins interface
+## Jenkins pipeline tips
+- keep your groovy language syntax as simple as possible (just execute shell scripts)
+- use plugins whenever you can
+- avoid using non-serializable objects (use plugins, then it shouldn't matter)
 ## Bower
 Web sites are made of lots of things — frameworks, libraries, assets, and utilities. Bower manages all these things for you
 ## Gulp
