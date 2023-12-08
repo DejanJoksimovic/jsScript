@@ -543,6 +543,23 @@ Service workers essentially act as proxy servers that sit between web applicatio
 
 
 
+# Testing:
+## Loosely coupled
+Modules should be as independent as possible from other modules, so that changes to module don’t heavily impact other modules.
+## Highly cohesive
+We want to design components that are self-contained: independent, and with a single, well-defined purpose
+## Test doubles:
+- fake: Fakes are objects that have working implementations
+- stub: Stubs are objects that return predefined values 
+- spy: Spy is a test double that records the invocations of its methods
+- mock: Mocks are combinations of stubs and spies
+
+
+
+
+
+
+
 
 # Build process:
 ## Transpiler is different from compiler.
