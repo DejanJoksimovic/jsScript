@@ -553,7 +553,36 @@ We want to design components that are self-contained: independent, and with a si
 - stub: Stubs are objects that return predefined values 
 - spy: Spy is a test double that records the invocations of its methods
 - mock: Mocks are combinations of stubs and spies
-
+## jest custom report
+Create custom-reporter.js
+```js
+class CustomReporter {
+    constructor(globalConfig, options) {
+      this._globalConfig = globalConfig;
+      this._options = options;
+    }
+  
+    onRunComplete(contexts, results) {
+      console.log('KRENUO')
+      if (results.numFailedTests > 0) {
+        console.log('Failed Files:');
+        results.testResults.forEach(testResult => {
+          if (testResult.numFailingTests > 0) {
+            console.log(11111, testResult)
+            console.log(testResult.testFilePath);
+          }
+        });
+      }
+    }
+  }
+  
+  module.exports = CustomReporter;
+```
+in jest.config:
+```json
+  // Use this configuration option to add custom reporters to Jest
+  reporters: ["default", "<rootDir>/src/custom-reporter.js"],
+```
 
 
 
