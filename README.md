@@ -1673,6 +1673,15 @@ is a syntax extension for javascript, written to be used with React. JSX is comp
 ## ReactDOM.render() renders JSX.
 ## JSX substitute for class is className.
 This is because class is reserved name in js and JSX is interpreted to js
+## Rendering of component is triggered:
+- When parent component is rendered (React doesn't care about changing props, this is simply a consequence, unless you use useMemo and useCallback)
+- When state of component changes
+- When subscriptions are triggered (subscriptions on redux and React context)
+## Never create a function that returns a component inside React component
+Create it outside of component. Reconciliation will always create a new reference to this component and rerender all children if function is created inside
+## Use key for component even if this is not a part of the list
+If we use key like this, component will unMount and mount on any change, this can be useful
+## You can use CONDITIONAL setState inside render method
 ## Events in react are written in camelCase.
 Html events are written in lowercase.
 ## If statement is not possible in JSX expression
