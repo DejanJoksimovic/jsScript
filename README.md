@@ -638,6 +638,27 @@ For the specified major version, ^ will match the most recent minor version.
 
 
 # JS:
+## Loop invariant
+A loop invariant is some predicate (condition) that holds for every iteration of the loop
+```js
+int j = 9;
+for(int i=0; i<10; i++)  
+j--;
+```
+In this example it is true (for every iteration) that i + j == 9.
+A weaker invariant that is also true is that i >= 0 && i <= 10.
+One may get confused between the loop invariant, and the loop conditional ( the condition which controls termination of the loop ).
+The loop invariant must be true:
+before the loop starts
+before each iteration of the loop
+after the loop terminates
+( although it can temporarily be false during the body of the loop )
+## deep clone
+- spread will only create new ref for first level
+- simplest way: 
+```js
+JSON.parse(JSON.stringify(x))
+```
 ## check if
 - Array (Array.isArray(something) or something.constructor === Array)
 - Boolean, Number, String (typeof something === 'boolean')
