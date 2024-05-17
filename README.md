@@ -268,7 +268,20 @@ When an event happens on an element, it first runs the handlers on it, then on i
 - Simple selectors: type, class, id
 - Attribute selectors: based on attribute values
 - Pseudo classes: elements that exist in certain state (hovered by mouse, check box that is currently disabled-enabled, element that is the first child..)
-- Pseudo elements: Match part of the content that is in the certain position in relation to the element.
+- Pseudo elements: Match part of the content that is in the certain position in relation to the element. 
+```css
+.example :is(h2, h4, :hover) {
+  color: red;
+}
+/* is selector can have invalid parameter and it will ignore it */
+/* is have higher specificity then some selectors */
+:where(h2, h4, :hover)
+/* where works very similar, but has zero specificity */
+.example:has(img) {
+  background: blue;
+}
+/* has selector selects .example element if element has an image*/
+```
 - Combinators: self explanatory
 - The render tree is sort of like the DOM tree, but doesn't match it exactly. The render tree knows about styles, so if you're hiding a div with display: none, it won't be represented in the render tree.
 - Multiple selectors: selectors separated by commas.
@@ -1901,14 +1914,69 @@ data is handled by state. Uncontrolled components - data is handled by DOM
 returns true if it is a valid react element
 ## Custom hooks
 should be used for reusing state logic between two different components. States are completelly different.
+```js
+const useWindowSize = () => {
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
+  
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  return windowSize;
+}
+// and then in component
+const windowSize = useWindowSize()
+// use it inside jsx if needed
+```
 ## First DOM is update and then effects are run
 ## useEffect is asynchronous, most of the hooks are
+## useEffect executes after the render
+every effect will use state from that corresponding cycle
+- use functions inside useEffect if possible
+- if above is not possible, extract functions out of you component or wrap those with use callback (in this case, functions will need to be a part of dependency array of useEffect)
+## a way to cancel request inside effect (avoid having race condition from previous request)
+```js
+function Article({ id }) {
+  const [article, setArticle] = useState(null);
+ 
+  useEffect(() => {
+    let didCancel = false;
+ 
+    async function fetchData() {
+      const article = await API.fetchArticle(id);
+      if (!didCancel) {
+        setArticle(article);
+      }
+    }
+ 
+    fetchData();
+ 
+    return () => {
+      didCancel = true;
+    };
+  }, [id]);
+ 
+  // ...
+}
+```
 ## effect clean up happens after every render
 ## always use hooks at the top level
 ## useReducer lets us use reducer to handle local state of the component
 ```js
 const [state, dispatch] = useReducer(stateReducer, []);
 ```
+useReducer is usually preferable to useState when you have complex state logic that involves multiple sub-values or when the next state depends on the previous one. useReducer also lets you optimize performance for components that trigger deep updates because you can pass dispatch down instead of callbacks
 ## setState (class components)
 merge state objects. useState doesn't
 ## if initial state is expensive, useState can receive a function that will eventually initiate state.
