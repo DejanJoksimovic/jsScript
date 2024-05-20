@@ -242,7 +242,7 @@ A responsive design can change its layout and appearance based on the screen siz
 ## Inline and block elements:
 A block-level element always starts on a new line and takes up the full width available (stretches out to the left and right as far as it can).
 An inline element does not start on a new line and only takes up as much width as necessary.
-## css:
+## CSS:
 Cascading Style Sheets (CSS) is a stylesheet language used to describe the presentation of a document written in HTML or XML.
 ## CSS Selectors
 In CSS, selectors are used to target the HTML elements on our web pages that we want to style.
@@ -285,6 +285,12 @@ When an event happens on an element, it first runs the handlers on it, then on i
 - Combinators: self explanatory
 - The render tree is sort of like the DOM tree, but doesn't match it exactly. The render tree knows about styles, so if you're hiding a div with display: none, it won't be represented in the render tree.
 - Multiple selectors: selectors separated by commas.
+## position
+- static: The top, right, bottom, left, and z-index properties have no effect
+- relative: Offset relative to itself based on the values of top, right, bottom, and left
+- absolute:  No space is created for the element in the page layout. Its final position is determined by the values of top, right, bottom, and left.
+- fixed:  No space is created for the element in the page layout. The element is positioned relative to its initial containing block, which is the viewport in the case of visual media. Its final position is determined by the values of top, right, bottom, and left.
+- sticky: Offset relative to its nearest scrolling ancestor and containing block (nearest block-level ancestor), including table-related elements, based on the values of top, right, bottom, and left. The offset does not affect the position of any other elements.
 ## CSS cascade: is a mechanism which controls which rule wins
 ## Specificity
 is basically a measure of how specific a selector is — how many elements it could match. Id selectors have high specificity. Only way to defeat specificity is !important
@@ -2052,6 +2058,13 @@ useEffect(() => {
 ```
 ## react doesn't sanitize href
 ## The only difference between the fragment and <> is that <> doesn't support key
+## key represent an element identity for React
+We can use key to tell React that it should unmount component if needed. In the example bellow we are using a key as an element identity so it will be unmounted if x changes, potentially. Otherwize, component1 will not be unmounted, it will only change the prop from smth to dummy.
+```jsx
+{x === 'smth' ?
+  <component1 key="first" smth={smth} />
+  : <component1 key="second" dummy={dummy}>}
+```
 
 
 
