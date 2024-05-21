@@ -663,6 +663,14 @@ For the specified major version, ^ will match the most recent minor version.
 
 
 # JS:
+### &&=, ||=
+```js
+if (x) {
+  x = y
+}
+// the same thing as 
+x &&= y
+```
 ## Loop invariant
 A loop invariant is some predicate (condition) that holds for every iteration of the loop
 ```js
@@ -1807,6 +1815,11 @@ can be used for lazy loading components. React.lazy currently only supports defa
 ```js
 React.lazy(() => import('...'));
 ```
+```jsx
+<Suspense fallback={<Spinner>}>
+  <ComponentX>
+</Suspense>
+```
 ## Component that is subscribed to context will read from closest Provider in ancestry
 ```js
 const MyContext = React.createContext(defaultValue); // when provider cannot be found, use default value
@@ -2352,6 +2365,78 @@ function unary(fn) {
         return fn( arg );
     };
 }
+8.  Binary search recursive
+
+
+let recursiveFunction = function (arr, x, start, end) {
+ 
+    // Base Condition
+    if (start > end) return false;
+ 
+    // Find the middle index
+    let mid = Math.floor((start + end) / 2);
+ 
+    // Compare mid with given key x
+    if (arr[mid] === x) return true;
+ 
+    // If element at mid is greater than x,
+    // search in the left half of mid
+    if (arr[mid] > x)
+        return recursiveFunction(arr, x, start, mid - 1);
+    else
+ 
+        // If element at mid is smaller than x,
+        // search in the right half of mid
+        return recursiveFunction(arr, x, mid + 1, end);
+}
+ 
+// Driver code
+let arr = [1, 3, 5, 7, 8, 9];
+let x = 5;
+ 
+if (recursiveFunction(arr, x, 0, arr.length - 1)) {
+    console.log("Element found!");
+}
+else { console.log("Element not found!"); }
+ 
+x = 6;
+ 
+if (recursiveFunction(arr, x, 0, arr.length - 1)) {
+    console.log("Element found!");
+}
+else { console.log("Element not found!"); }
+
+9. Bubble Sort
+
+function bblSort(arr) {
+
+    for (var i = 0; i < arr.length; i++) {
+
+        // Last i elements are already in place  
+        for (var j = 0; j < (arr.length - i - 1); j++) {
+
+            // Checking if the item at present iteration 
+            // is greater than the next iteration
+            if (arr[j] > arr[j + 1]) {
+
+                // If the condition is true
+                // then swap them
+                var temp = arr[j]
+                arr[j] = arr[j + 1]
+                arr[j + 1] = temp
+            }
+        }
+    }
+
+    // Print the sorted array
+    console.log(arr);
+}
+
+// This is our unsorted array
+var arr = [234, 43, 55, 63, 5, 6, 235, 547];
+
+// Now pass this array to the bblSort() function
+bblSort(arr);
 ```
 
 
