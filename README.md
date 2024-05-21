@@ -468,6 +468,10 @@ two common ways to add external css to html
 Object oriented programming is focusing on 'how system' looks using interfaces and classes as entities, while functional principle is focusing on functional use of the system (something like that :) )
 ## Memory leak
 A memory leak is the gradual deterioration of system performance that occurs over time as the result of the fragmentation of a computer's RAM due to poorly designed or programmed applications that fail to free up memory segments when they are no longer needed.
+## Event driven arhitecture
+- publisher send events that are immutable and it doesn't care if events are handled or not
+- broker keeps records of all events
+- subscribers subscribe to broker and can choose to handle certain events
 ## Design Patterns
 Is a general repeatable solution to a commonly occurring problem in software design. 
     * SINGLETON A class of which only a single instance can exist.
@@ -530,6 +534,8 @@ are cryptographic protocols designed to provide communications security over a c
 CDNs deliver cached, static content from a network of servers across the globe.
 ## monorepo
 A monorepo (mono repository) is a single repository that stores all of your code and assets for every project. It is not a good idea to use git with monorepo, it gets really complex to use.
+## monolith repo
+A monolith repo is usually referred to single project repo.
 
 ## Node JS is not multithreaded but imitates this
 
@@ -2062,9 +2068,16 @@ useEffect(() => {
 We can use key to tell React that it should unmount component if needed. In the example bellow we are using a key as an element identity so it will be unmounted if x changes, potentially. Otherwize, component1 will not be unmounted, it will only change the prop from smth to dummy.
 ```jsx
 {x === 'smth' ?
-  <component1 key="first" smth={smth} />
-  : <component1 key="second" dummy={dummy}>}
+  <componentX key="first" smth={smth} />
+  : <componentX key="second" dummy={dummy}>}
 ```
+## React 19:
+- useActionState
+- useFormStatus
+- useOptimistic
+- use api
+- ssr
+- ref as a prop
 
 
 
