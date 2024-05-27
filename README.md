@@ -116,7 +116,11 @@ Form can be submitted with submit() using js
 ### LocalStorage:
 no expiration date, clears only with js or  clear browser cache
 ### SessionStorage:
-stores data only for one session. Data is never transfered to server
+stores data only for one session. Data is never transferred to server. 
+```js
+sessionStorage.setItem('cool_secret', 123);
+// last until tab is closed
+```
 ### Cookie:
 stores data that has to be sent to server. Only cookie is for server side reading as well as for client side. Size less then 4kb
 ## script async and defer
@@ -1704,6 +1708,11 @@ abc1.name // abc1
 ```
 ## Lexical scope
 When we access a variable from a child scope to the parent scope, this is known as being available in the “lexical” scope.
+## eval - evaluates code with given string
+```js
+eval('1+2') // 3
+```
+
 
 
 
