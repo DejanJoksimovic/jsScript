@@ -2091,6 +2091,11 @@ We can use key to tell React that it should unmount component if needed. In the 
 - use api
 - ssr
 - ref as a prop
+## PropsWithChildren when using typescript for childern typization
+PropsWithChildren can be used with type argument
+## ComponentPropsWithoutRef<argumentType> can be use to type html button element
+## Omit in typescript is 'extending' the type and ommiting certain part of the type
+
 
 
 
@@ -2840,4 +2845,41 @@ getParam(true) // value y
 // etc...
 			     
 			     
-```
+
+
+
+
+
+
+// given number of pascal triangle level determine array of numbers
+
+
+const getRow = function(numRows) {
+    if (numRows === 0) return [1];
+    if (numRows === 1) return [1,1];
+    const getRowsFinal = (remainingNumRows, acc = [1, 1]) => {
+        if (remainingNumRows === 1) return acc
+        const getNewAcc = (accSoFar = [], index = 0) => {
+            if (acc.length === index + 1) return accSoFar
+            return getNewAcc([...accSoFar, acc[index] + acc[index + 1]], index+=1)
+        }
+        return getRowsFinal(remainingNumRows - 1, [1, ...getNewAcc(), 1])
+    };
+    
+    return getRowsFinal(numRows);
+};
+
+getRow(0)
+// [1]
+getRow(1)
+// [1, 1]
+getRow(2)
+// [1, 2, 1]
+getRow(3)
+// [1, 3, 3, 1]
+getRow(4)
+// [1, 4, 6, 4, 1]
+getRow(5)
+// [1, 5, 10, 10, 5, 1]
+getRow(6)
+// [1, 6, 15, 20, 15, 6, 1]
