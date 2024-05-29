@@ -1798,6 +1798,7 @@ cannot be called inside render method because right after setState the render fu
 ## Decomposition, not inheretance!
 ## Virtual dom
 The Virtual DOM is an abstraction of the HTML DOM.
+### Virtual DOM focuses on optimizing DOM updates for performance, Shadow DOM provides encapsulation and isolation for web components, enhancing modularity and maintainability
 ## ReactDOM is a javascript library containing react specific methods.
 All the methods deal with the DOM.
 ## Logic should be written in render method React.
