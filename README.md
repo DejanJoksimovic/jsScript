@@ -612,6 +612,10 @@ in jest.config:
   // Use this configuration option to add custom reporters to Jest
   reporters: ["default", "<rootDir>/src/custom-reporter.js"],
 ```
+## instead of fire event, use userEvent from React Testing Library
+it will add keyDown, keyPressed and keyUp
+## use screen instead of render function from Jest
+advantage in using screen is that you don't need to update render to get latest jest dom changes
 
 
 
@@ -2105,8 +2109,17 @@ We can use key to tell React that it should unmount component if needed. In the 
 PropsWithChildren can be used with type argument
 ## ComponentPropsWithoutRef<argumentType> can be use to type html button element
 ## Omit in typescript is 'extending' the type and ommiting certain part of the type
+## 2 rules of hooks
+- always use those within react component (function)
+- do not use hooks conditionally (expect for use and useContext hooks)
 
+Hooks rely on order of rendering (expect for use and useContext hooks), so if a hook is skipped, it will break the implementation
 
+useContext and use are stored in separate part in the memory
+## When context is changed, all children components will rerender.
+To stop this, useMemo can be used for first child component (if context is used on third level for example). Also we can use children prop (and extract provider to custom component) for all children components, this way only third level component will be rerendered. The reason for this is that children is only a prop, it is not a jsx that will create fiber components
+## useRef
+With this hook we create a mutable value that exist for the lifetime of the component
 
 
 
@@ -2893,3 +2906,15 @@ getRow(5)
 // [1, 5, 10, 10, 5, 1]
 getRow(6)
 // [1, 6, 15, 20, 15, 6, 1]
+
+
+
+
+
+// Write a function compose that takes any amount of functions and returns a function that takes any amount of arguments and gives them to the first function, then that result to the second function and so on
+
+const compose = (...funs) => {
+    const fun = (index, result) => (index < funs.length) ? fun(index+1, funs[index](result)) : result
+    return (...args) => fun(1, funs[0](...args))
+}
+
