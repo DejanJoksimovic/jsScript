@@ -468,6 +468,12 @@ two common ways to add external css to html
 
 
 # General:
+## An imported module is read-only: you cannot modify the imported module. Only the module that exports them can change its value.
+```js
+import myCounter from './counter';
+// myCounter is exported let
+myCounter += 1;
+```
 ## Difference between functional and object oriented programming
 Object oriented programming is focusing on 'how system' looks using interfaces and classes as entities, while functional principle is focusing on functional use of the system (something like that :) )
 ## Memory leak
