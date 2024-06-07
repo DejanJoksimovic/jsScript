@@ -679,6 +679,8 @@ if (x) {
 // the same thing as 
 x &&= y
 ```
+## use Symbols
+To create props that are 'hidden' for third party objects. Every Symbol is unique and cannot be accessed if there is no reference
 ## Loop invariant
 A loop invariant is some predicate (condition) that holds for every iteration of the loop
 ```js
@@ -2120,6 +2122,8 @@ useContext and use are stored in separate part in the memory
 To stop this, useMemo can be used for first child component (if context is used on third level for example). Also we can use children prop (and extract provider to custom component) for all children components, this way only third level component will be rerendered. The reason for this is that children is only a prop, it is not a jsx that will create fiber components
 ## useRef
 With this hook we create a mutable value that exist for the lifetime of the component
+## React.Children
+Api is used to modify children elements before rendering
 
 
 
