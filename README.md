@@ -677,6 +677,8 @@ For the specified major version, ^ will match the most recent minor version.
 
 
 # JS:
+### Primitives can access object methods while remaining lightweight.
+That is made possible by Javascript with creating temporary Wrappers around primitive values
 ### &&=, ||=
 ```js
 if (x) {
