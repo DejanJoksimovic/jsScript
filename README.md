@@ -3010,3 +3010,30 @@ const titleToNumber = function(columnTitle) {
         return (letters[curr] * multiplyTimes(26, index + 1)) + acc
     }, letters[first])
 };
+
+// write a function that checks if number is happy
+// number is happy if sum of squares of its digits is eventually equal 1
+
+// example:
+// Input: n = 19
+// Output: true
+// Explanation:
+// 1**2 + 9**2 = 82
+// 8**2 + 2**2 = 68
+// 6**2 + 8**2 = 100
+// 1**2 + 0**2 + 0**2 = 1
+
+// Input: n = 2
+// Output: false
+
+const isHappy = function(n) {
+  const calculate = (nextNumber = n, sameNumberTries = 0) => {
+    if (sameNumberTries === 20) return false
+    const str = nextNumber + '';
+    const sum = str.split('').map(a => +a).reduce((acc, curr) => {
+      return acc + curr**2
+    }, 0)
+    return sum === 1 ? true : calculate(sum, ++sameNumberTries)
+  }
+  return calculate(n)
+};
