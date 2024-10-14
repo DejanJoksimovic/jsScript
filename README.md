@@ -1741,6 +1741,73 @@ eval('1+2') // 3
 
 
 
+# React Router:
+## useNavigation returns navigation state "idle" | "submitting" | "loading"
+```jsx
+const navigation = useNavigation();
+// navigation.state...
+```
+## Relative links
+start without '/' and will inheret closest router in which those are rendered
+## Outlet
+component that renders the next match in set of matches, renders children routes.
+Should be used in parent route elements to render their child route elements. This allows nested UI to show up when child routes are rendered
+## index route
+A child route with no path that with no path that renders in parents outlet.
+e. Index routes render into their parent's Outlet at their parent's URL (like a default child route).
+## layout route
+A parent route with no path used for grouping child routes. Usually contains outlet
+## each location has unique key
+```js
+const { location: { key }} = useLocation();
+```
+## until Router 6 we needed to think about the order of routes because of priority
+from Router 6, order is not important and if there are similar routes, Router 6 will
+figure it out.
+example: /something/new and something/:id (new will have priority)
+## there are two ways to navigate: <Link>, navigate
+## A <BrowserRouter> stores the current location in the browser's address bar using clean URLs and navigates using the browser's built-in history stack.
+## Segment - The parts of a URL or path pattern between the / characters
+## Route can be case sensitive
+```jsx
+<Route caseSensitive path="/wEll-aCtuA11y" />
+```
+## Difference between element and component:
+```jsx
+<Route path="/for-sale" element={<Properties />} />
+<Route path="/for-sale" Component={Properties} />
+```
+Component will create React element for you. Element expects React element
+## <Link> 
+renders an accessible <a> element with a real href that points to the resource it's linking to
+## NavLink supports functions as className and style. children function is also supported
+## Navigate component:
+```jsx
+<Navigate to="/dashboard" replace={true} />
+```
+## <Routes>
+Will match a set of child routes from the current location. Whenever the location changes, <Routes> looks through all its child routes to find the best match and renders that branch of the UI
+## Navigate function can handle these kind of routes: '../smth'
+## some usefull hooks:
+- useAsyncError - Returns the rejection value from the nearest [<Await>][await] component
+- useBlocker - allows you to prevent user from navigating away
+- useHref - self explanatory
+- useNavigationType - returns how user came to the current page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # REACT:
 ## React
 is javascript library for building user interfaces.
