@@ -2324,7 +2324,9 @@ lazy, promises not (f,g,o will not execute unless called)
 ## Observable can return multiple values over time
 functions can return one value, one time.
 ## Rxjs pipeable operator
-(function) takes observables as an input and returns another observable (a pure operation) (subscribing to output observable will also subscribe to input observable
+(function) takes observables as an input and returns another observable (a pure operation) (subscribing to output observable will also subscribe to input observable)
+## Decorators
+An ES2016 decorator is an expression which returns a function and can take a target, name and property descriptor as arguments. You apply it by prefixing the decorator with an @ character and placing this at the very top of what you are trying to decorate. Decorators can be defined for either a class, a method or a property.
 
 
 
