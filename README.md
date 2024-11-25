@@ -1726,7 +1726,21 @@ When we access a variable from a child scope to the parent scope, this is known 
 ```js
 eval('1+2') // 3
 ```
-
+## in and of operators
+in only works with objects (refers to keys)
+of only works with arrays (refers to values)
+```js
+const a = {x: 1, y: 2}
+for(o in a) {console.log(o)}
+// x y
+const b = [1,2]
+for(o in b) {console.log(o)}
+// 1 2
+```
+## Object, if we put numbers as keys (or strings that can be converted)
+if we use Object.keys it will sort keys
+## we can use structuredClone method to clone an object
+it will not clone refferences (like Object.assign will)
 
 
 
@@ -1793,7 +1807,8 @@ Will match a set of child routes from the current location. Whenever the locatio
 - useBlocker - allows you to prevent user from navigating away
 - useHref - self explanatory
 - useNavigationType - returns how user came to the current page
-
+## Loaders and lazy loading
+are supported by React Router
 
 
 
