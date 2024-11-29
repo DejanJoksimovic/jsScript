@@ -578,6 +578,27 @@ Service workers essentially act as proxy servers that sit between web applicatio
 
 
 
+
+# Architecture
+## Microfrontend
+### Advantages
+- Scalability, reusability
+- Reliability (if one fails, others work as expected)
+- Each mfe has it own pipeline
+- Each mfe/bff can have separate technologies (in most cases)
+### disadvantages
+- more complexity
+- more cost (more pipelines, more repos)
+### module federation webpack plugin is necessary
+### sub routing (Router within router)
+use relative paths ('../blaBla')
+
+
+
+
+
+
+
 # Testing:
 ## Loosely coupled
 Modules should be as independent as possible from other modules, so that changes to module don’t heavily impact other modules.
@@ -2214,6 +2235,9 @@ To stop this, useMemo can be used for first child component (if context is used 
 With this hook we create a mutable value that exist for the lifetime of the component
 ## React.Children
 Api is used to modify children elements before rendering
+## useDeferredValue hook
+lets you defer updating ui
+
 
 
 
