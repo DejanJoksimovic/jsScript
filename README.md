@@ -252,8 +252,8 @@ Cascading Style Sheets (CSS) is a stylesheet language used to describe the prese
 In CSS, selectors are used to target the HTML elements on our web pages that we want to style.
 ```css
 .a.b selects with both a and b
-.a .b selects b where it is decendent of a
-.a > .b selects b where it is direct decendent of a
+.a .b selects b where it is descendent of a
+.a > .b selects b where it is direct descendent of a
 .a, .b selects a or b
 ```
 ## Units
@@ -265,7 +265,7 @@ In CSS, selectors are used to target the HTML elements on our web pages that we 
 - mm: mm
 - em: font size of parrent
 - rem: font size of root element
-## Bubling
+## Bubbling
 When an event happens on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors.
 
 ## CSS Selectors types:
@@ -570,7 +570,10 @@ Using a tool that converts your newer code into older code equivalents
 - nvm use command will change to nvm version specified
 ## Service worker 
 Service workers essentially act as proxy servers that sit between web applications, the browser, and the network (when available). They are intended, among other things, to enable the creation of effective offline experiences, intercept network requests and take appropriate action based on whether the network is available, and update assets residing on the server.
-
+## Major versions are for breaking existing use
+minor changes are for features
+## inversion of control
+- when a library gives user an opportunity to have more control over it's api
 
 
 
@@ -2237,6 +2240,171 @@ With this hook we create a mutable value that exist for the lifetime of the comp
 Api is used to modify children elements before rendering
 ## useDeferredValue hook
 lets you defer updating ui
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# REACT QUERY
+## example:
+```jsx
+const { status, isLoading, isError, data, error, isFetching } = useQuery('todos', fetchTodoList)
+```
+## Query states:
+- isloading
+- isError
+- isSuccess
+- isIdle
+## We can use a param for making a query:
+```jsx
+ const result = useQuery(['todos', todoId], () => fetchTodoById(todoId))
+```
+## Query function
+query function should return a promise
+## For RQ to determine an error, query function must throw an error
+note: fetch does not throw an error
+## Passing params to query function:
+```js
+function Todos({ status, page }) {
+  const result = useQuery(['todos', { status, page }], fetchTodoList)
+}
+// Access the key, status and page variables in your query function!
+function fetchTodoList({ queryKey }) {
+  const [_key, { status, page }] = queryKey
+  return new Promise()
+}
+```
+## use object for useQuery
+```js
+useQuery({
+  queryKey: ['todo', 7],
+  queryFn: fetchTodo,
+  ...config,
+})
+```
+## you can use parallel queries:
+```js
+const usersQuery = useQuery('users', fetchUsers)
+const teamsQuery = useQuery('teams', fetchTeams)
+```
+## also dynamicaly:
+```js
+function App({ users }) {
+  const userQueries = useQueries(
+    users.map(user => {
+      return {
+        queryKey: ['user', user.id],
+        queryFn: () => fetchUserById(user.id),
+      }
+    })
+  )
+}
+```
+## dependent query:
+```js
+// Get the user
+const { data: user } = useQuery(['user', email], getUserByEmail)
+
+const userId = user?.id
+
+// Then get the user's projects
+const { isIdle, data: projects } = useQuery(
+  ['projects', userId],
+  getProjectsByUser,
+  {
+    // The query will not execute until the userId exists
+    enabled: !!userId,
+  }
+)
+
+// isIdle will be `true` until `enabled` is true and the query begins to fetch.
+// It will then go to the `isLoading` stage and hopefully the `isSuccess` stage :)
+```
+## If a user leaves your application and returns to stale data, React Query automatically requests fresh data for you in the background.
+You can disable this globally or per-query using the refetchOnWindowFocus option
+- disable globally
+```js
+//
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
+
+function App() {
+  return <QueryClientProvider client={queryClient}>...</QueryClientProvider>
+}
+```
+- disable locally
+```js
+useQuery('todos', fetchTodos, { refetchOnWindowFocus: false })
+```
+## If you ever want to disable a query from automatically running, you can use the enabled = false option.
+## retry (defaults to 3)
+```js
+const result = useQuery(['todos', 1], fetchTodoListPage, {
+  retry: 10, // Will retry failed requests 10 times before displaying an error
+})
+```
+## if we want to do some post/put/delete method use useMutation
+### we can explicitly 'invalidate' query to mark those as stale and potential refetchOnWindowFocus
+```js
+queryClient.invalidateQueries() // every
+queryClient.invalidateQueries('todos') // specific
+```
+### invalidation can be done for mutations
+
+
+
+## What can we do with React Query (further reading wheb needed): 
+### use keepPreviousData to paginate
+### use useInfiniteQuery for infinite Loaders
+### use initialData to repopulate query
+```js
+function Todos() {
+  const result = useQuery('todos', () => fetch('/todos'), {
+    initialData: initialTodos,
+  })
+}
+```
+### initial data can be used in combination with staleTime and initialDataUpdatedAt
+### Placeholder data allows a query to behave as if it already has data, similar to the initialData option, but the data is not persisted to the cache.
+### There is a possiblity of preFetching with prefetchQuery
+### there is support for optimistic updates
+### We can cancel query. It is done differently for different techs (fetch, axios etc.)
+### scroll restoration is present out of the box
+### Query filters can be used:
+```js
+// Cancel all queries
+await queryClient.cancelQueries()
+// Remove all inactive queries that begin with `posts` in the key
+queryClient.removeQueries('posts', { inactive: true })
+// Refetch all active queries
+await queryClient.refetchQueries({ active: true })
+// Refetch all active queries that begin with `posts` in the key
+await queryClient.refetchQueries('posts', { active: true })
+```
+### There is support for using it with Next.js
+### We can manually reset query if ErrorBoundary throws an error
+### Testing should be done with 'React Hooks Testing Library'
+## NOTE: API REFFERENCE IS VERY DETAILED 
+
+
+
+
+
+
 
 
 
