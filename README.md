@@ -2413,7 +2413,146 @@ await queryClient.refetchQueries('posts', { active: true })
 
 
 
+# TYPESCRIPT:
+- use: https://www.typescriptlang.org/play as playground and also use TS Config tab to play with configuration
+## typescript additional types:
+- any
+- unknown (ensure someone using this type declares what type is)
+- never (not possible this type could happen)
+- void (function with no return (or undefined))
+## union
+```ts
+type MyBool = true | false
+```
+## Generics
+```ts
+type StringArray = Array<string>
+```
+## Custom generics:
+```ts
+interface Backpack<Type> {
+  add: (obj: Type) => void;
+  get: () => Type;
+}
+const backpack: Backpack<string> = { add: ( obj ) => {}, get: () => 'test' }
+```
+## function only requires subset of object fields to match:
+```ts
+interface Point {
+  x: number;
+  y: number;
+}
+function logPoint(p: Point) {
+  console.log(`${p.x}, ${p.y}`);
+}
+const point3 = { x: 12, y: 26, z: 89 };
+logPoint(point3); // logs "12, 26"
+const rect = { x: 33, y: 3, width: 30, height: 80 };
+logPoint(rect); // logs "33, 3"
+```
+## if we create a constant object, we will be able to change its param:
+```ts
+const myUser = {
+  name: "Sabrina",
+};
+myUser.name = "Cynthia";
+```
+## if we add 'as const' we will not be able:
+```ts
+const myUnchangingUser = {
+  name: "Fatma",
+} as const;
+// error
+myUnchangingUser.name = "Raîssa";
+```
+## 'as const' works with arrays
+## type composition - intersection types
+when 2 types intersect to create new type
+## unknown
+```ts
+const jsonParserUnknown = (jsonString: string): unknown => JSON.parse(jsonString);
+const myOtherAccount = jsonParserUnknown(`{ "name": "Samuel" }`);
+// error
+myOtherAccount.name;
+```
+but:
+```ts
+type User = { name: string };
+const myUserAccount = jsonParserUnknown(`{ "name": "Samuel" }`) as User;
+myUserAccount.name;
+```
+## never
+```ts
+const neverReturns = () => {
+  // If it throws on the first line
+  throw new Error("Always throws, never returns");
+};
+```
+## Tuples
+arrays which has different types of values, order is important, of course
+```ts
+const passingResponse: [string, number] = ["{}", 200];
+```
+## PartialType - Takes a type and converts all of its properties to optional ones.
+```ts
+interface Sticker {
+  id: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  submitter: undefined | string;
+}
 
+type StickerUpdateParam = Partial<Sticker>;
+```
+## ReadOnlyType - Takes an object and makes its properties read-only.
+```ts
+type StickerFromAPI = Readonly<Sticker>;
+```
+## Record<KeysFrom, Type> - Creates a type which uses the list of properties from KeysFrom and gives them the value of Type.
+```ts
+type NavigationPages = "home" | "stickers" | "about" | "contact";
+interface PageInfo {
+  title: string;
+  url: string;
+  axTitle?: string;
+}
+const navigationInfo: Record<NavigationPages, PageInfo> = {
+  home: { title: "Home", url: "/" },
+  about: { title: "About", url: "/about" },
+  contact: { title: "Contact", url: "/contact" },
+  stickers: { title: "Stickers", url: "/stickers/all" },
+};
+```
+## Pick<Type, Keys> - // Creates a type by picking the set of properties Keys from Type. Essentially an allow-list for extracting type information from a type.
+```ts
+type StickerSortPreview = Pick<Sticker, "name" | "updatedAt">;
+```
+## Omit<Type, Keys> - Creates a type by removing the set of properties Keys from Type. Essentially a block-list for extracting type information from a type.
+```ts
+type StickerTimeMetadata = Omit<Sticker, "name">;
+```
+## Exclude<Type, RemoveUnion> - Creates a type where any property in Type's properties which don't overlap with RemoveUnion.
+```ts
+type HomeNavigationPages = Exclude<NavigationPages, "home">;
+```
+## Extract<Type, MatchUnion> - Creates a type where any property in Type's properties are included if they overlap with MatchUnion.
+```ts
+type DynamicPages = Extract<NavigationPages, "home" | "stickers">;
+```
+## NonNullable<Type> - Creates a type by excluding null and undefined from a set of properties. Useful when you have a validation check.
+## ReturnType<Type> - Extracts the return value from a Type.
+```ts
+declare function getStickerByID(id: number): Promise<StickerLookupResult>;
+type StickerResponse = ReturnType<typeof getStickerByID>;
+```
+## Required<Type> - Creates a type which converts all optional properties to required ones.
+## There are ways to tell ts if something needs to have a value:
+```ts
+const definitelyString1 = getID() as string;
+const definitelyString2 = getID()!;
+```
+## Void is the return type of a function which does not return a value.
 
 
 
