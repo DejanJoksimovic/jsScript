@@ -2240,8 +2240,10 @@ With this hook we create a mutable value that exist for the lifetime of the comp
 Api is used to modify children elements before rendering
 ## useDeferredValue hook
 lets you defer updating ui
-
-
+## useRef.current - only inside useEffect
+## for development mode, useEffect will be executed twice (for check)
+## you can use console.time() and console.timeEnd() for logging
+## if you need callback inside custom hook within useEffect, use 'useEffectEvent' hook to avoid adding callback as param for dependency array, that will trigger unecessary loop
 
 
 
