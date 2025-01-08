@@ -225,8 +225,12 @@ window.addEventListener("message", (event) => {
 is a database that is built into a browser
 ## headless browser
 Web browser without a graphical user interface
-
-
+## isp - internet service provider
+is an organization that provides myriad services related to accessing, using, managing, or participating in the Internet
+## dns - domain name server
+The Domain Name System (DNS) is a hierarchical and distributed name service that provides a naming system for computers, services, and other resources on the Internet or other Internet Protocol (IP) networks
+## tracert
+The TRACERT diagnostic utility determines the route to a destination by sending Internet Control Message Protocol (ICMP) echo packets to the destination.
 
 
 
@@ -2413,6 +2417,49 @@ await queryClient.refetchQueries('posts', { active: true })
 
 
 
+# JEST
+## use 'done' to signalize that test is done
+```js
+test('the data is peanut butter', done => {
+  function callback(error, data) {
+    if (error) {
+      done(error);
+      return;
+    }
+    try {
+      expect(data).toBe('peanut butter');
+      done();
+    } catch (error) {
+      done(error);
+    }
+  }
+
+  fetchData(callback);
+});
+// if done is never called, test will fail with timeout error
+// If the expect statement fails, it throws an error and done() is not called. If we want to see in the test log why it failed, we have to wrap expect in a try block and pass the error in the catch block to done. Otherwise, we end up with an opaque timeout error that doesn't show what value was received by expect(data).
+```
+## resolves/rejects
+You can also use the .resolves matcher in your expect statement, and Jest will wait for that promise to resolve. If the promise is rejected, the test will automatically fail.
+```js
+test('the data is peanut butter', () => {
+  return expect(fetchData()).resolves.toBe('peanut butter');
+});
+test('the fetch fails with an error', () => {
+  return expect(fetchData()).rejects.toMatch('error');
+});
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 # TYPESCRIPT:
@@ -2555,7 +2602,41 @@ const definitelyString1 = getID() as string;
 const definitelyString2 = getID()!;
 ```
 ## Void is the return type of a function which does not return a value.
+## Conditional Types
+```ts
+type Cat = { meows: true };
+type Dog = { barks: true };
+type Cheetah = { meows: true; fast: true };
+type Wolf = { barks: true; howls: true };
+type ExtractDogish<A> = A extends { barks: true } ? A : never;
 
+type NeverCat = ExtractDogish<Cat>;
+
+type APIResponses = { version: 0; msg: string } | { version: 1; message: string; status: number } | { error: string };
+
+```
+## Discriminate types
+```ts
+type APIResponses = { version: 0; msg: string } | { version: 1; message: string; status: number } | { error: string };
+const handleResponse = (response: APIResponses) => {
+  // Handle the error case, and then return
+  if ("error" in response) {
+    console.error(response.error);
+    return;
+  }
+
+  // TypeScript now knows that APIResponse cannot be
+  // the error type. If it were the error, the function
+  // would have returned. You can verify this by
+  // hovering over response below.
+
+  if (response.version === 0) {
+    console.log(response.msg);
+  } else if (response.version === 1) {
+    console.log(response.status, response.message);
+  }
+};
+```
 
 
 
