@@ -2637,6 +2637,85 @@ const handleResponse = (response: APIResponses) => {
   }
 };
 ```
+## Transformational type
+```ts
+type MyPartialType<Type> = {
+  // For every existing property inside the type of Type
+  // convert it to be a ?: version
+  [Property in keyof Type]?: Type[Property];
+};
+// change all props to optional (?)
+type MappedArtistForEdit = MyPartialType<Artist>;
+```
+## Structural type system
+TypeScript is a Structural Type System. A structural type
+system means that when comparing types, TypeScript only
+takes into account the members on the type. This is in contrast to nominal type systems, where you
+could create two types but could not assign them to each other.
+TypeScript will allow (number) to equal (number, boolean)
+in the parameters, but not (number, boolean) -> (number)
+## Type Guarding
+is the term where you influence the code
+flow analysis via code. TypeScript uses existing JavaScript
+behavior which validates your objects at runtime to influence
+the code flow.
+```ts
+function isAnInternetOrder(order: PossibleOrders): order is InternetOrder {
+  return order && "email" in order;
+}
+// returns boolean
+```
+## Typescript declared with const will be exact string type (that specific value)
+## Type narrowing is narrowing the type to specific set of values
+## enums
+```ts
+// Unathorized will have value of 401
+enum StatusCodes {
+  OK = 200,
+  BadRequest = 400,
+  Unauthorized,
+  PaymentRequired,
+  Forbidden,
+  NotFound,
+}
+
+// Enums support accessing data in both directions from key
+const okNumber = StatusCodes.OK;
+const okNumberIndex = StatusCodes["OK"];
+okNumberIndex === 200
+const stringBadRequest = StatusCodes[400];
+
+```
+## nominal typing
+means that each type is unique
+and even if types have the same data you cannot assign
+across types.
+## types vs interfaces
+- They both support extending other interfaces and types.
+Type aliases do this via intersection types, while
+interfaces have a keyword.
+- TS recommend you use interfaces over type
+aliases. Specifically, because you will get better error
+messages.
+- interfaces are open and type aliases are closed. This means you can extend an interface by declaring it a second time.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
