@@ -2248,6 +2248,11 @@ lets you defer updating ui
 ## for development mode, useEffect will be executed twice (for check)
 ## you can use console.time() and console.timeEnd() for logging
 ## if you need callback inside custom hook within useEffect, use 'useEffectEvent' hook to avoid adding callback as param for dependency array, that will trigger unecessary loop
+## return on useEffect will be executed before each change of dependent value to desynhronize
+as consequence of needed desynhronization, it will execute on component unmount
+## useEffect is actually a synchronization with external world
+Each Effect in your code should represent a separate and independent synchronization process.
+
 
 
 
@@ -2449,6 +2454,80 @@ test('the fetch fails with an error', () => {
   return expect(fetchData()).rejects.toMatch('error');
 });
 ```
+## Jest executes all describe handlers in a test file before it executes any of the actual tests.
+```js
+describe('describe outer', () => {
+  console.log('describe outer-a');
+
+  describe('describe inner 1', () => {
+    console.log('describe inner 1');
+
+    test('test 1', () => console.log('test 1'));
+  });
+
+  console.log('describe outer-b');
+
+  test('test 2', () => console.log('test 2'));
+
+  describe('describe inner 2', () => {
+    console.log('describe inner 2');
+
+    test('test 3', () => console.log('test 3'));
+  });
+
+  console.log('describe outer-c');
+});
+
+// describe outer-a
+// describe inner 1
+// describe outer-b
+// describe inner 2
+// describe outer-c
+// test 1
+// test 2
+// test 3
+```
+## .mock property:
+```js
+const myMock1 = jest.fn();
+const a = new myMock1();
+console.log(myMock1.mock.instances);
+// expect(someMockFunction.mock.calls[0][0]).toBe('first arg');
+const myMock = jest.fn();
+console.log(myMock());
+// > undefined
+
+myMock.mockReturnValueOnce(10).mockReturnValueOnce('x').mockReturnValue(true);
+
+console.log(myMock(), myMock(), myMock(), myMock());
+// > 10, 'x', true, true
+```
+## mocking partials
+```js
+jest.mock('../foo-bar-baz', () => {
+  const originalModule = jest.requireActual('../foo-bar-baz');
+  //Mock the default export and named export 'foo'
+  return {
+    __esModule: true,
+    ...originalModule,
+    default: jest.fn(() => 'mocked baz'),
+    foo: 'mocked foo',
+  };
+});
+```
+## mock implementation
+```js
+const myMockFn = jest
+  .fn(() => 'default')
+  .mockImplementationOnce(() => 'first call')
+  .mockImplementationOnce(() => 'second call');
+
+console.log(myMockFn(), myMockFn(), myMockFn(), myMockFn());
+// > 'first call', 'second call', 'default', 'default'
+```
+
+
+
 
 
 
@@ -2469,7 +2548,10 @@ test('the fetch fails with an error', () => {
 - unknown (ensure someone using this type declares what type is)
 - never (not possible this type could happen)
 - void (function with no return (or undefined))
-## union
+## literals
+string literal achieved with const keyword
+## union and intersection
+If a union is an OR, then an intersection is an AND.
 ```ts
 type MyBool = true | false
 ```
@@ -2532,6 +2614,7 @@ myUserAccount.name;
 ```
 ## never
 ```ts
+// if you hover on type, you will see return type never
 const neverReturns = () => {
   // If it throws on the first line
   throw new Error("Always throws, never returns");
@@ -2611,9 +2694,6 @@ type Wolf = { barks: true; howls: true };
 type ExtractDogish<A> = A extends { barks: true } ? A : never;
 
 type NeverCat = ExtractDogish<Cat>;
-
-type APIResponses = { version: 0; msg: string } | { version: 1; message: string; status: number } | { error: string };
-
 ```
 ## Discriminate types
 ```ts
@@ -3107,6 +3187,7 @@ const twoSum = function(nums, target) {
 /*
 twoSum([2,0,7,11,15], 9)
 result: [0,2]
+return indexes that will sum second param
 */
 
 
@@ -3198,7 +3279,7 @@ const isValidParentheses = function(s) {
                 const newAcc = appropriate ? { ...acc, soFar: oldSoFar.slice(0, oldSoFar.length - 1) }  :  { ...acc, eliminator: true };
                 return newAcc;
         default:
-            return true;
+            return acc;
         }
     }, { soFar: [], eliminator: false });
     return !res.eliminator && !res.soFar.length;
