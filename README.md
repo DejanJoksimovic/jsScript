@@ -2778,6 +2778,20 @@ interfaces have a keyword.
 aliases. Specifically, because you will get better error
 messages.
 - interfaces are open and type aliases are closed. This means you can extend an interface by declaring it a second time.
+## create a tsconfig file:
+```
+tsc --init
+```
+## use ! at the end of expression to 'tell' ts that something will not be falsy
+```ts
+const a = document.querySelector('a')!
+// .href is not a problem now
+console.log(a.href)
+```
+## type casting
+<!-- as Something -->
+## access modifiers
+public, private, readonly
 
 
 
@@ -3270,7 +3284,7 @@ result ''
 const isValidParentheses = function(s) {
     if (!s) return true;
     const res = s.split('').reduce((acc, curr) => {
-        switch(true) {
+        switch(!eleminator) {
             case ['(', '{', '['].includes(curr):
                 return { ...acc, soFar:  [ ...acc.soFar, curr ] }
             case [')', '}', ']'].includes(curr):
