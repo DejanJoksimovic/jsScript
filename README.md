@@ -2525,7 +2525,10 @@ const myMockFn = jest
 console.log(myMockFn(), myMockFn(), myMockFn(), myMockFn());
 // > 'first call', 'second call', 'default', 'default'
 ```
-
+## need to use expect.assertions(1); if we are testing async code
+verifies that a certain number of assertions are called during a test. This is often useful when testing asynchronous code, in order to make sure that assertions in a callback actually got called.
+## jest.useFakeTimers() jest.useRealTimers() jest.runAllTimers() jest.runOnlyPendingTimers()
+fakeTimers replace original implementation, realTimers resets and runAllTimers (runOnlyPendingTimers) is self explanatory
 
 
 
