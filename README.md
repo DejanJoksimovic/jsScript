@@ -1769,6 +1769,11 @@ for(o in b) {console.log(o)}
 if we use Object.keys it will sort keys
 ## we can use structuredClone method to clone an object
 it will not clone refferences (like Object.assign will)
+## when appling methods on numbers
+```js
+123..toString()
+// first dot is considered a decimal point
+```
 
 
 
@@ -3711,4 +3716,37 @@ const isHappy = function(n) {
     return sum === 1 ? true : calculate(sum, ++sameNumberTries)
   }
   return calculate(n)
+};
+
+// write a function that will return if strings are isomorphic
+// Two strings s and t are isomorphic if the characters in s can be replaced to get t
+
+// isIsomorphic('egg', 'add') -> true
+// isIsomorphic('foo', 'bar') -> false
+// isIsomorphic('paper', 'title') -> true
+// isIsomorphic('badc', 'baba') -> false
+
+
+const getNew = arr => arr.slice(1, arr.length);
+
+const isIsomorphic = function(s, t) {
+    const map = {
+        [s[0]]: t[0]
+    }
+    const sNew = getNew(s)
+    const tNew = getNew(t)
+    const checkChars = (sNew, tNew) => {
+        switch (true) {
+            case !sNew.length:
+                return true
+            case (!map[sNew[0]] && Object.values(map).indexOf(tNew[0]) < 0):
+                map[sNew[0]] = tNew[0]
+                return checkChars(getNew(sNew), getNew(tNew))
+            case map[sNew[0]] === tNew[0]:
+                return checkChars(getNew(sNew), getNew(tNew))
+            default:
+                return false
+        }
+    }
+    return checkChars(sNew, tNew);
 };
