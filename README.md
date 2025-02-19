@@ -1774,6 +1774,7 @@ it will not clone refferences (like Object.assign will)
 123..toString()
 // first dot is considered a decimal point
 ```
+## all imported modules are pre-parsed, imported modules gets run first.
 
 
 
@@ -2909,6 +2910,27 @@ const store = createStore(
     )
 );
 ```
+
+
+
+
+
+
+
+
+
+
+
+# GIT:
+## git checkout main^
+main^ is the first parent of main. HEAD^ is checkout one step (commit) above
+## HEAD~4
+specify number of commits
+## reset
+git reset HEAD~1
+- it will revert 1 commit
+## revert
+revert existing changes
 
 
 
