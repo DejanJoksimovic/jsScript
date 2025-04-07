@@ -578,6 +578,8 @@ Service workers essentially act as proxy servers that sit between web applicatio
 minor changes are for features
 ## inversion of control
 - when a library gives user an opportunity to have more control over it's api
+## WebAssembly
+is a type of code that can be run in modern web browsers — it is a low-level assembly-like language with a compact binary format that runs with near-native performance and provides languages such as C/C++, C# and Rust with a compilation target so that they can run on the web along with JS.
 
 
 
