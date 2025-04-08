@@ -3202,13 +3202,11 @@ bblSort(arr);
 const scrollToTop = () => window.scrollTo(0, 0);
 // swapping 2 vars
 [foo, bar] = [bar, foo];
-```
-```js
+
 // create variable with name as a variable
 const a = 'test';
 this[a] = 1;
-```
-```js
+
   const debounce = (callback, timer, timeout) => (...args) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => callback(args), timer);
@@ -3223,8 +3221,7 @@ const process = debounce((someStr) => console.log(someStr), 5000);
 process('test');
 process('test');
 process('test');
-```
-```js
+
 const twoSum = function(nums, target) {
     return nums.reduce((acc, curr, index) => {
         const candidate = nums.slice(index + 1).findIndex(elem => elem + curr === target);
@@ -3840,3 +3837,51 @@ const collect = (gen, arr, i = 0) => {
   })
 };
 
+
+
+let third = (val) => val % 3 === 0
+let fil = filter(genFromTo(0, 5), third)
+
+// fil.next().value // 0
+// fil.next().value // 3
+// fil.next().value // undefined
+
+
+const filter = (gen, predicate) => {
+  const getNextValue = () => {
+    const genNext = gen.next().value;
+    switch (true) {
+    case !!predicate(genNext) || predicate(genNext) === 0:
+      return genNext;
+    case !genNext:
+      return
+    default:
+      return getNextValue();
+    }
+  }
+  return {
+    next: () => ({
+      value: getNextValue()
+    })
+  }
+}
+
+const concat = (...gens) => {
+  let i = 0;
+  let currentGen = gens[i]
+  const getNextValue = () => {
+    const currGenValue = currentGen?.next().value;
+    if (!!currGenValue || currGenValue === 0) {
+      return currGenValue;
+    }
+    currentGen = gens[++i]
+    return currentGen?.next().value;
+  }
+  return {
+    next: () => ({
+      value: getNextValue()
+    })
+  }
+}
+
+```
