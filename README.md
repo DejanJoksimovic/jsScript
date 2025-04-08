@@ -231,6 +231,10 @@ is an organization that provides myriad services related to accessing, using, ma
 The Domain Name System (DNS) is a hierarchical and distributed name service that provides a naming system for computers, services, and other resources on the Internet or other Internet Protocol (IP) networks
 ## tracert
 The TRACERT diagnostic utility determines the route to a destination by sending Internet Control Message Protocol (ICMP) echo packets to the destination.
+## setInterval
+The setInterval() method of the Window interface repeatedly calls a function or executes a code snippet, with a fixed time delay between each call.
+This method returns an interval ID which uniquely identifies the interval, so you can remove it later by calling clearInterval().
+delay between calls are not 'waiting' for function execution to finish, it starts in the same time as function execution
 
 
 
@@ -3774,3 +3778,65 @@ const isIsomorphic = function(s, t) {
     }
     return checkChars(sNew, tNew);
 };
+
+// summaryRanges([0,1,2,4,5,7, 9, 10, 12, 14, 15, 16, 17, 19])
+// ['0->2', '4->5', '7', '9->10', '12', '14->17', '19']
+
+const summaryRanges = function(nums) {
+    const obj = nums.reduce((acc, curr) => {
+        const { arr, tempArr } = acc;
+        const { length: tempArrLength } = tempArr;
+        const tempArrLastIndex = tempArrLength - 1;
+        switch (true) {
+          case (!tempArrLength):
+            return ({
+                arr,
+                tempArr: [curr]
+            })
+          case (curr - tempArr[tempArrLastIndex] === 1):
+            return ({
+                arr,
+                tempArr: [...tempArr, curr]
+            });
+          default:
+            return ({
+                arr: [...arr, tempArr.length === 1 ? `${tempArr[0]}` : `${tempArr[0]}->${tempArr[tempArrLastIndex]}`],
+                tempArr: [curr]
+            });
+        }
+    }, {arr: [], tempArr: []});
+    // we need to handle last iteration
+    const { arr, tempArr } = obj;
+    switch (true) {
+      case !tempArr.length:
+        return arr;
+      case tempArr.length > 1:
+        return [...arr, `${tempArr[0]}->${tempArr[tempArr.length - 1]}`];
+      default:
+        return [...arr, `${tempArr[0]}`];
+    }
+};
+
+
+// Github zero to mastery
+
+const element = (arr, i = 0) => ({next: () => ({value: arr[i++]})})
+
+const genFromTo = (a, b) => {
+  return {
+    next: () => ({
+      value: (a <= b) ? a++ : undefined
+    })
+  }
+}
+
+const collect = (gen, arr, i = 0) => {
+  return ({
+    next: () => {
+      const {value} = gen.next()
+      value && arr.push(value)
+      return {value}
+    }
+  })
+};
+
