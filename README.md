@@ -1178,6 +1178,8 @@ in JS are not arrays. They are array-like objects. You can access element like i
 ## If we declare array as a constant, we will be able to change it’s content. (const x = [2]; x[0] = 3; //ok)
 ## Object.freeze()
 can be used to turn mutable object/array/function to immutable(top level only). 
+## Object.seal()
+is used to prevent any changes for existing properties. We can add new properties
 ## To achieve immutability
 we don’t need to copy the entire structure every time, just the previous version.
 ```js
