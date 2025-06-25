@@ -584,10 +584,126 @@ minor changes are for features
 - when a library gives user an opportunity to have more control over it's api
 ## WebAssembly
 is a type of code that can be run in modern web browsers — it is a low-level assembly-like language with a compact binary format that runs with near-native performance and provides languages such as C/C++, C# and Rust with a compilation target so that they can run on the web along with JS.
+## Fetch browser api accepts FormData object as a body
+## Track download progress for fetch:
+```js
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits?per_page=100');
 
+const reader = response.body.getReader();
 
+// Step 2: get total length
+const contentLength = +response.headers.get('Content-Length');
 
+// Step 3: read the data
+let receivedLength = 0; // received that many bytes at the moment
+let chunks = []; // array of received binary chunks (comprises the body)
+while(true) {
+  const {done, value} = await reader.read();
 
+  if (done) {
+    break;
+  }
+
+  chunks.push(value);
+  receivedLength += value.length;
+
+  console.log(`Received ${receivedLength} of ${contentLength}`)
+}
+
+// Step 4: concatenate chunks into single Uint8Array
+let chunksAll = new Uint8Array(receivedLength); // (4.1)
+let position = 0;
+for(let chunk of chunks) {
+  chunksAll.set(chunk, position); // (4.2)
+  position += chunk.length;
+}
+
+// Step 5: decode into a string
+let result = new TextDecoder("utf-8").decode(chunksAll);
+
+// We're done!
+let commits = JSON.parse(result);
+alert(commits[0].author.login);
+```
+## abort fetch request
+```js
+// abort in 1 second
+let controller = new AbortController();
+setTimeout(() => controller.abort(), 1000);
+
+try {
+  let response = await fetch('/article/fetch-abort/demo/hang', {
+    signal: controller.signal
+  });
+} catch(err) {
+  if (err.name == 'AbortError') { // handle abort()
+    alert("Aborted!");
+  } else {
+    throw err;
+  }
+}
+```
+## URL object:
+```js
+let url = new URL('https://javascript.info/url');
+
+alert(url.protocol); // https:
+alert(url.host);     // javascript.info
+alert(url.pathname); // /url
+```
+## encoding is handled automatically with URL object
+otherwise use encodeURI, decodeURI, encodeURIComponent, decodeURIComponent
+- difference between Component ones is:
+encodeURI encodes only characters that are totally forbidden in URL.
+encodeURIComponent encodes same characters, and, in addition to them, characters #, $, &, +, ,, /, :, ;, =, ? and @.
+
+## XMLHttpRequest:
+```js
+let xhr = new XMLHttpRequest();
+
+// 2. Configure it: GET-request for the URL /article/.../load
+xhr.open('GET', '/article/xmlhttprequest/example/load');
+
+// 3. Send the request over the network
+xhr.send();
+
+// 4. This will be called after the response is received
+xhr.onload = function() {
+  if (xhr.status != 200) { // analyze HTTP status of the response
+    alert(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+  } else { // show the result
+    alert(`Done, got ${xhr.response.length} bytes`); // response is the server response
+  }
+};
+
+xhr.onprogress = function(event) {
+  if (event.lengthComputable) {
+    alert(`Received ${event.loaded} of ${event.total} bytes`);
+  } else {
+    alert(`Received ${event.loaded} bytes`); // no Content-Length
+  }
+
+};
+
+xhr.onerror = function() {
+  alert("Request failed");
+};
+
+// -------------------
+// upload progress
+
+xhr.upload.onprogress = function(event) {
+  alert(`Uploaded ${event.loaded} of ${event.total} bytes`);
+};
+
+xhr.upload.onload = function() {
+  alert(`Upload finished successfully.`);
+};
+
+xhr.upload.onerror = function() {
+  alert(`Error during the upload: ${xhr.status}`);
+};
+```
 
 
 
