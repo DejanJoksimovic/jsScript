@@ -235,6 +235,14 @@ The TRACERT diagnostic utility determines the route to a destination by sending 
 The setInterval() method of the Window interface repeatedly calls a function or executes a code snippet, with a fixed time delay between each call.
 This method returns an interval ID which uniquely identifies the interval, so you can remove it later by calling clearInterval().
 delay between calls are not 'waiting' for function execution to finish, it starts in the same time as function execution
+## subresource integrity
+```html
+<script
+  src="https://example.com/example-framework.js"
+  integrity="sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"
+  crossorigin="anonymous"></script>
+```
+Subresource Integrity (SRI) is a security feature that enables browsers to verify that resources they fetch (for example, from a CDN) are delivered without unexpected manipulation. It works by allowing you to provide a cryptographic hash that a fetched resource must match.
 
 
 
