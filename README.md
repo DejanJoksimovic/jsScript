@@ -2170,7 +2170,7 @@ return <SpecificComponent someProp={props.someProp} />;
 ## JSX between tags, can be string (whitespaces and blank lines will be removed). Expressions can be children
 ## Booleans, null and undefined are ignored in JSX (false and true)
 ## Virtualize long lists libraries:
-react-window, react-virtualized
+react-window, react-virtualized, react-virtuoso
 ## if some rerendering (even if it is only a small part of dom), takes a lot of time, we can use shouldComponentUpdate lifecycle function shouldComponentUpdate and return true or false depending on what situation we know for sure that component should or shouldn't be updated.
 ## React portal
 is a way to render children outside DOM hierarchy of parrent component. Typical use case is for dialogs.
