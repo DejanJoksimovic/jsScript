@@ -3322,6 +3322,20 @@ bblSort(arr);
 
 
 
+# CODING PATTERNS:
+- two pointer: 
+  - One pointer starts from beginning and other from the end and they proceed towards each other
+  - oth pointers start from the beginning but one pointer moves at a faster pace than the other one
+  - using any of 2 ways described we can go 'faster' through the array and do conditional
+
+
+
+
+
+
+
+
+
 # JS Chanlenges:
 ```js
 // scroll to the top
@@ -3564,9 +3578,7 @@ const isSameTree = (p, q) => {
     isSameTree([1,2,3], [1,2,3]) // true
     isSameTree([1,2,null], [1,2,3]) // false
 */
-```
 
-```js
 const isMirror = (t1, t2) => {
   if (t1 === null && t2 === null) return true;
   if (t1 === null || t2 === null) return false;
@@ -3577,9 +3589,7 @@ const isMirror = (t1, t2) => {
 const isSymmetric = root => isMirror(root, root);
 // isMirror([1,2,2,3,4,4,3]) // true
 // isMirror([1,2,2,null,3,null,3]) // false
-```
 
-```js
 const maxDepth = root => {
     const check = (node, depth = 0) => {
         if (!node) return 0;
@@ -3593,9 +3603,7 @@ const maxDepth = root => {
 // maxDepth([3,9,20,null,null,15,7]) // 3
 // maxDepth([1,null,2]) // 2
 // maxDepth([]) // 0
-```
 
-```js
 // helper
 const maxDepth = root => {
     const check = (node, depth = 0) => {
@@ -3684,13 +3692,7 @@ const convertIntoCoins = (amount, coins) => {
 convertIntoCoins(46, [25, 10, 5, 2])
 convertIntoCoins(46, [25, 10, 5, 2, 1])
 
-
-
-
-
-
 // write a function that will return random value with each call with falsy param, and same value as previous with truthy param
-
 const getParam = (
   (param = Math.random()) =>
     useOld =>
@@ -3709,17 +3711,8 @@ getParam() // random value y
 getParam(true) // value y
 getParam(true) // value y
 // etc...
-			     
-			     
-
-
-
-
-
 
 // given number of pascal triangle level determine array of numbers
-
-
 const getRow = function(numRows) {
     if (numRows === 0) return [1];
     if (numRows === 1) return [1,1];
@@ -3750,19 +3743,12 @@ getRow(5)
 getRow(6)
 // [1, 6, 15, 20, 15, 6, 1]
 
-
-
-
-
 // Write a function compose that takes any amount of functions and returns a function that takes any amount of arguments and gives them to the first function, then that result to the second function and so on
-
 const compose = (...funs) => {
     const fun = (index, result) => (index < funs.length) ? fun(index+1, funs[index](result)) : result
     return (...args) => fun(1, funs[0](...args))
 }
-
 // Write a function that returns excel column letters acording to number
-
 const letters = {
     0: 'Z',
     1: "A",
@@ -3800,7 +3786,6 @@ const convertToTitle = function(columnNumber, lettersSoFar = "") {
 };
 
 // Write a function that accepts the number and returns the letters from excell (reversed from previous function)
-
 const letters = {
     Z: 26,
     A: 1,
@@ -4010,4 +3995,23 @@ const concat = (...gens) => {
   }
 }
 
+const wordPattern = (pattern, s) => {
+    const sArr = s.split(' ');
+    const pArr = pattern.split('');
+    if (sArr.length !== pArr.length) return false;
+    const psObj = sArr.reduce((acc, curr, index) => {
+        if (!acc.result) return acc;
+        const patternCurrent = pArr[index];
+        const existingValue = acc.obj[patternCurrent];
+        const valuesAreNotAligned = existingValue && curr !== existingValue
+        const thereIsSameValueWithDiffKey = !!Object.entries(acc.obj).filter((objEntry) => objEntry[0]!== patternCurrent).find(objEntry => objEntry[1] === curr);
+        if (valuesAreNotAligned || thereIsSameValueWithDiffKey) return {obj:{}, result: false}
+        return {obj: {...acc.obj, [patternCurrent]: curr}, result: true}
+    }, {obj:{}, result: true});
+    return psObj.result
+};
+
+wordPattern('abba', 'dog cat cat dog') // true
+wordPattern('abba', 'dog cat cat fish') // false
+wordPattern('abba', 'dog dog dog dog') // false
 ```
